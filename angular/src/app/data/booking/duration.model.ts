@@ -1,9 +1,9 @@
 
 /**
  * Represents the reservation dates (booking date, checkin date, ...).
- * @constructor
+ * class
  */
- 
+
 export class Duration {
 	durationId: number;
 	checkIn: Date;
