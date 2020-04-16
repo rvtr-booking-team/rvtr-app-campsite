@@ -4,7 +4,7 @@ import { Status } from './status.model';
 
 /**
  * Represents a book.
- * @constructor
+ * @
  */
 
 export class Reservation {

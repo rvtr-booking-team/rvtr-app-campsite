@@ -18,12 +18,12 @@ export class DurationService {
     return this._http.get_async(this.url)
                       .pipe(this.handleError("Error in get Guest"));
   }
-  
+
   post(duration: Duration): Observable<Duration> {
 
-    return this._http.post_async(this.url, duration) 
+    return this._http.post_async(this.url, duration)
                       .pipe(this.handleError<Duration>("post error")) as Observable<Duration>
-                      
+
   }
 
   put(duration: Duration): Observable<Duration> {
@@ -32,9 +32,9 @@ export class DurationService {
   }
 
   delete() {
-    
+
   }
-  
+
   private handleError<T> (operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       return of(result as T)
