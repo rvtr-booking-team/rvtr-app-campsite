@@ -19,10 +19,8 @@ export class DurationService {
   }
 
   post(duration: Duration): Observable<Duration> {
-
     return this._http.post(this.url, duration)
                       .pipe(this.handleError<Duration>("post error"));
-
   }
 
   put(duration: Duration): Observable<Duration> {
