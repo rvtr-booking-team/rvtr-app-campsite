@@ -3,8 +3,8 @@ import { Duration } from './duration.model';
 import { Status } from './status.model';
 
 /**
- * Represents a book.
- * @
+ * Represents Reservation object model.
+ * class
  */
 
 export class Reservation {
