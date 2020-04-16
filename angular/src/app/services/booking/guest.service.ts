@@ -29,7 +29,7 @@ export class GuestService {
 
   put(guest: Guest): Observable<Guest> {
     return this._http.put_async(this.url, guest)
-                      .pipe(this.handleError("Error in put Guest")) as Observable<Guest>;
+                      .pipe(this.handleError<Guest>("Error in put Guest")) as Observable<Guest>;
   }
 
   delete() {
@@ -38,7 +38,6 @@ export class GuestService {
   
   private handleError<T> (operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-      // Let the app keep running by returning an empty result.
       return of(result as T)
     }
   }

@@ -29,7 +29,7 @@ export class StatusService {
 
   put(status: Status): Observable<Status> {
     return this._http.put_async(this.url, status)
-                      .pipe(this.handleError("Error in put Status")) as Observable<Status>;
+                      .pipe(this.handleError<Status>("Error in put Status")) as Observable<Status>;
   }
 
   delete() {
@@ -38,7 +38,6 @@ export class StatusService {
   
   private handleError<T> (operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-      // Let the app keep running by returning an empty result.
       return of(result as T)
     }
   }
