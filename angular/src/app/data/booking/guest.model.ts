@@ -1,7 +1,7 @@
 
 /**
  * Represents the number of guesses reserving the rooms.
- * @constructor
+ * class
  */
 
 export class Guest {
