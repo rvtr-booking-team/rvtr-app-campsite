@@ -16,24 +16,33 @@ describe('ReservationService', () => {
   httpMock = injector.get(HttpTestingController);
   injector = getTestBed();
 
-  describe('#getDurations', () => {
-    it('should return an Observable<Duration[]>', () => {
+  describe('#getReservation', () => {
+    it('should return an Observable<Reservation[]>', () => {
       //dummy data
-      const dummyDuration = [
+      const dummyReservation = [
         {
-          durationId: 1,
-          checkIn: new Date(2019, 1, 4),
-          checkOut: new Date(2019, 1, 5),
-          creationDate: new Date(2019, 1, 2),
-          modifiedDate: new Date(2019, 1, 3)
+          reservationId: 1,
+          accountId: 1,
+          rentalId: 1,
+          duration: {
+            durationId: 1,
+            checkIn: new Date(2020, 2, 4),
+            checkOut: new Date(2020, 2, 5),
+            creationDate: new Date(2020, 2, 2),
+            modifiedDate: new Date(2020, 2, 3)
+          },
+          status: {
+            statusId: 1,
+            statusName: 'Pending'
+          },
+          guests: {
+            guestId: 1,
+            guestType: 'adult',
+            guestFirstName: 'John',
+            guestLastName: 'Smith'            
+          },
+          notes: 'accommodations ...'
         },
-        {
-          durationId: 2,
-          checkIn: new Date(2020, 2, 4),
-          checkOut: new Date(2020, 2, 5),
-          creationDate: new Date(2020, 2, 2),
-          modifiedDate: new Date(2020, 2, 3)
-        }
       ]
       
     })

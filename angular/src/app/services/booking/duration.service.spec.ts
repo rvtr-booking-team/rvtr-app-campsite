@@ -1,12 +1,13 @@
 import { TestBed, getTestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-
+import { Config } from './config.booking';
 import { DurationService } from './duration.service';
 
 describe('DurationService', () => {
   let service: DurationService;
   let httpMock: HttpTestingController;
   let injector: TestBed;
+  let config: Config;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -16,13 +17,13 @@ describe('DurationService', () => {
     injector = getTestBed();
     service = injector.get(DurationService);
     httpMock = injector.get(HttpTestingController);
+    config = injector.get(Config);
     
   });
 
   describe('#getDurations', () => {
     it('should return an Observable<Duration[]>', () => {
-      //dummy data
-      const dummyDuration = [
+      let dummyDurations = [
         {
           durationId: 1,
           checkIn: new Date(2019, 1, 4),
@@ -39,15 +40,14 @@ describe('DurationService', () => {
         }
       ];
 
-      service.Get().subscribe( duration =>{
-        expect(duration).toEqual(dummyDuration);
+      service.get().subscribe(durations => {
+        expect(durations.length).toBe(2);
+        expect(durations).toEqual(dummyDurations);
       });
 
-    })
+      let req = httpMock.expectOne(`${config.duration}`);
+      expect(req.request.method).toBe("GET");
+      req.flush(dummyDurations);
+      });
   })
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
-
-
 });
