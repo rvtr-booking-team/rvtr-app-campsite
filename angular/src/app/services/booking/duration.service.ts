@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Duration } from '../../data/booking/duration.model';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { Config } from './config.booking';
 
 @Injectable({
   providedIn: 'root'
@@ -11,25 +12,25 @@ export class DurationService {
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json'})
   }
-  constructor(private _http: HttpClient) { }
+  constructor(private _http: HttpClient, private _config: Config) { }
 
   get(): Observable<Duration[]> {
-    return this._http.get(this.url)
-                      .pipe(this.handleError("Error in get Guest"));
+    return this._http.get(this._config.duration.uri)
+                      .pipe(this.handleError<Duration[]>("Error in get Guest"));
   }
 
   post(duration: Duration): Observable<Duration> {
-    return this._http.post(this.url, duration)
+    return this._http.post(this._config.duration.uri, duration)
                       .pipe(this.handleError<Duration>("post error"));
   }
 
   put(duration: Duration): Observable<Duration> {
-    return this._http.put(this.url, duration)
+    return this._http.put(this._config.duration.uri, duration)
                       .pipe(this.handleError<Duration>("Error in put Duration"));
   }
 
   delete(durationId: number): Observable<Duration> {
-    const url = `${this.url}/${durationId}`;
+    const url = `${this._config.duration.uri}/${durationId}`;
     return this._http.delete(url)
                 .pipe(this.handleError<Duration>("Error in delete Duration"));
   }
