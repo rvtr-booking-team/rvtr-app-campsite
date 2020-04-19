@@ -13,11 +13,13 @@ export class GuestService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json'})
   }
 
-  constructor(private _http: HttpClient, private _config: Config) {}
+  constructor(private _http: HttpClient, public _config: Config) {}
 
-  get(): Observable<Guest[]> {
+  getGuests(): Observable<Guest[]> {
     return this._http.get<Guest[]>(this._config.guest.uri)
-                      .pipe(this.handleError("Error in get Guest"));
+                     .pipe(
+                        tap(_ => console.log("Getting all guests")),
+                        catchError(this.handleError("Error in get Guest", [])));
   }
 
   post(guest: Guest): Observable<Guest> {

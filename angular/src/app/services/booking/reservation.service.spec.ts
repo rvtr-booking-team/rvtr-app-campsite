@@ -35,7 +35,7 @@ describe('ReservationService', () => {
           modifiedDate: new Date(2020, 2, 3)
         }
       ]
-      
+
     })
   })
 
