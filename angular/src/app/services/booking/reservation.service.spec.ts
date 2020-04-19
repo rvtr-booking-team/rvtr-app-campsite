@@ -2,44 +2,68 @@ import { TestBed, getTestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
 import { ReservationService } from './reservation.service';
+import { Reservation } from '../../data/booking/reservation.model';
+import { Config } from './config.booking';
 
 describe('ReservationService', () => {
   let service: ReservationService;
   let httpMock: HttpTestingController;
   let injector: TestBed;
+  let config: Config;
 
-  TestBed.configureTestingModule({
-    imports: [HttpClientTestingModule],
-    providers: [ReservationService]
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
+      providers: [ReservationService, Config]
+    });
+    injector = getTestBed();
+    service = injector.get(ReservationService);
+    httpMock = injector.get(HttpTestingController);
+    config = injector.get(Config);
   });
-  service = injector.get(ReservationService);
-  httpMock = injector.get(HttpTestingController);
-  injector = getTestBed();
 
-  describe('#getDurations', () => {
-    it('should return an Observable<Duration[]>', () => {
-      //dummy data
-      const dummyDuration = [
+  describe('#getReservations', () => {
+    let dummyReservations: Reservation[];
+
+    beforeEach(() => {
+      dummyReservations = [
         {
-          durationId: 1,
-          checkIn: new Date(2019, 1, 4),
-          checkOut: new Date(2019, 1, 5),
-          creationDate: new Date(2019, 1, 2),
-          modifiedDate: new Date(2019, 1, 3)
+          reservationId: 1,
+          accountId: 1,
+          rentalId: 1,
+          duration: {
+            durationId: 1,
+            checkIn: new Date(2020, 2, 4),
+            checkOut: new Date(2020, 2, 5),
+            creationDate: new Date(2020, 2, 2),
+            modifiedDate: new Date(2020, 2, 3)
+          },
+          status: {
+            statusId: 1,
+            statusName: 'Pending'
+          },
+          guests: {
+            // {
+            //   guestId: 1,
+            //   guestType: 'adult',
+            //   guestFirstName: 'John',
+            //   guestLastName: 'Smith'
+            // },
+          },
+          notes: 'accommodations ...'
         },
-        {
-          durationId: 2,
-          checkIn: new Date(2020, 2, 4),
-          checkOut: new Date(2020, 2, 5),
-          creationDate: new Date(2020, 2, 2),
-          modifiedDate: new Date(2020, 2, 3)
-        }
-      ]
-
+      ] as Reservation[];
     })
-  })
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
+    it('should return an Observable<Reservation[]>', () => {
+      service.get().subscribe(
+        reservations => expect(reservations).toEqual(dummyReservations, "should expect list of reservations"),
+        fail
+      );
+
+      const req = httpMock.expectOne(config.reservation.uri);
+      expect(req.request.method).toBe("GET");
+      req.flush(dummyReservations);
+    });
+  })
 });

@@ -51,8 +51,8 @@ jobs:
       - name: lcov_upload
         uses: actions/upload-artifact@v1.0.0
         with:
-          name: test_coverage
-          path: ${{ env.WORKING_DIRECTORY }}/test_coverage
+          name: code_coverage
+          path: ${{ env.WORKING_DIRECTORY }}/code_coverage
 
   analyze:
     name: analyze_angular
@@ -66,8 +66,8 @@ jobs:
       - name: lcov_download
         uses: actions/download-artifact@v1.0.0
         with:
-          name: test_coverage
-          path: ${{ env.WORKING_DIRECTORY }}/test_coverage
+          name: code_coverage
+          path: ${{ env.WORKING_DIRECTORY }}/code_coverage
       - name: npm_cache
         uses: actions/cache@v1.1.2
         with:
@@ -76,16 +76,14 @@ jobs:
       - name: npm_install
         run: npm clean-install
         working-directory: ${{ env.WORKING_DIRECTORY }}
+      - if: github.event_name == 'pull_request'
+        name: npm_scan_external
+        run: npm run scan
+        working-directory: ${{ env.WORKING_DIRECTORY }}
       - env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        if: github.repository == env.RVTR_REPOSITORY
-        name: sonar_scan
-        uses: sonarsource/sonarcloud-github-action@master
-        with:
-          projectBaseDir: ${{ env.WORKING_DIRECTORY }}
-      - if: github.repository != env.RVTR_REPOSITORY
-        name: npm_scan
+        if: github.event_name != 'pull_request'
+        name: npm_scan_internal
         run: npm run scan
         working-directory: ${{ env.WORKING_DIRECTORY }}
 

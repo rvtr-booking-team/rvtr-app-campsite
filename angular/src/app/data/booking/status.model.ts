@@ -1,7 +1,7 @@
 
 /**
  * Represents the reservation status(pending, complete, ...).
- * class
+ * @constructor
  */
 
 export class Status {
