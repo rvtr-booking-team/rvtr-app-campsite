@@ -2,24 +2,31 @@ import { TestBed, getTestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
 import { ReservationService } from './reservation.service';
+import { Reservation } from '../../data/booking/reservation.model';
+import { Config } from './config.booking';
 
 describe('ReservationService', () => {
   let service: ReservationService;
   let httpMock: HttpTestingController;
   let injector: TestBed;
+  let config: Config;
 
-  TestBed.configureTestingModule({
-    imports: [HttpClientTestingModule],
-    providers: [ReservationService]
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
+      providers: [ReservationService, Config]
+    });
+    injector = getTestBed();
+    service = injector.get(ReservationService);
+    httpMock = injector.get(HttpTestingController);
+    config = injector.get(Config);    
   });
-  service = injector.get(ReservationService);
-  httpMock = injector.get(HttpTestingController);
-  injector = getTestBed();
 
-  describe('#getReservation', () => {
-    it('should return an Observable<Reservation[]>', () => {
-      //dummy data
-      const dummyReservation = [
+  describe('#getReservations', () => {
+    let dummyReservations: Reservation[];
+
+    beforeEach(() => {
+      dummyReservations = [
         {
           reservationId: 1,
           accountId: 1,
@@ -36,19 +43,27 @@ describe('ReservationService', () => {
             statusName: 'Pending'
           },
           guests: {
-            guestId: 1,
-            guestType: 'adult',
-            guestFirstName: 'John',
-            guestLastName: 'Smith'            
+            // {
+            //   guestId: 1,
+            //   guestType: 'adult',
+            //   guestFirstName: 'John',
+            //   guestLastName: 'Smith'
+            // },
           },
           notes: 'accommodations ...'
         },
-      ]
-      
+      ] as Reservation[];
     })
-  })
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
+    it('should return an Observable<Reservation[]>', () => {   
+      service.get().subscribe(
+        reservations => expect(reservations).toEqual(dummyReservations, "should expect list of reservations"),
+        fail
+      );
+
+      const req = httpMock.expectOne(config.reservation.uri);
+      expect(req.request.method).toBe("GET");
+      req.flush(dummyReservations);
+    });
+  })
 });
