@@ -26,8 +26,7 @@ export class GuestService {
                      .pipe(
                             tap((newGuest: Guest) => newGuest),
                             this.handleError<Guest>("post error")
-                      );
-
+                      )
   }
 
   put(guest: Guest): Observable<Guest> {
