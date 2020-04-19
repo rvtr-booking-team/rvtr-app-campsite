@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Guest } from '../../data/booking/guest.model';
 import { Observable, of } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators'
 import { Config } from './config.booking';
 
 @Injectable({
@@ -15,14 +16,17 @@ export class GuestService {
   constructor(private _http: HttpClient, private _config: Config) {}
 
   get(): Observable<Guest[]> {
-    return this._http.get(this._config.guest.uri)
+    return this._http.get<Guest[]>(this._config.guest.uri)
                       .pipe(this.handleError("Error in get Guest"));
   }
 
   post(guest: Guest): Observable<Guest> {
 
     return this._http.post(this._config.guest.uri, guest)
-                      .pipe(this.handleError<Guest>("post error"));
+                     .pipe(
+                            tap((newGuest: Guest) => newGuest),
+                            this.handleError<Guest>("post error")
+                      );
 
   }
 
