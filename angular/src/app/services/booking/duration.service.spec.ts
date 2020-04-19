@@ -49,5 +49,20 @@ describe('DurationService', () => {
       expect(req.request.method).toBe("GET");
       req.flush(dummyDurations);
       });
-  })
+
+          //404 error testing
+    it('can test for 404 error', () => {
+      const emsg = '404 Error Test';
+
+      service.get().subscribe( data => 
+        fail('should have failed with 404 error'),
+        (error: HttpErrorResponse) => {
+          expect(error.status).toEqual(404, 'status');
+          expect(error.error).toEqual(emsg, 'message');
+        
+      });
+      let req = httpMock.expectOne(`${config.duration}`);
+      req.flush(emsg, {status: 404, statusText: 'Not Found'});
+    });
+  });
 });
