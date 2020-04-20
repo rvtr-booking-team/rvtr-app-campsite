@@ -19,16 +19,16 @@ export class GuestService {
     return this._http.get<Guest[]>(this._config.guest.uri)
                      .pipe(
                         tap(_ => console.log("Getting all guests")),
-                        catchError(this.handleError("Error in get Guest", [])));
+                        catchError(this.handleError<Guest[]>("Error in get Guest", []))
+                      );
   }
 
-  post(guest: Guest): Observable<Guest> {
-
-    return this._http.post(this._config.guest.uri, guest)
+  saveGuest(guest: Guest): Observable<Guest> {
+    return this._http.post<Guest>(this._config.guest.uri, guest, this.httpOptions)
                      .pipe(
-                            tap((newGuest: Guest) => newGuest),
-                            this.handleError<Guest>("post error")
-                      )
+                            tap(newGuest => console.log(`saved guest was: ${JSON.stringify(newGuest)}\n`)),
+                            catchError(this.handleError<Guest>("post error"))
+                      );
   }
 
   put(guest: Guest): Observable<Guest> {
@@ -42,7 +42,7 @@ export class GuestService {
                 .pipe(this.handleError<Guest>("Error in deleting guest"));
   }
 
-  private handleError<T> (operation = 'operation', result?: T) {
+ private handleError<T> (operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       return of(result as T)
     }
