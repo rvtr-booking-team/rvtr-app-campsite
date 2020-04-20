@@ -24,11 +24,12 @@ export class StatusService {
                         );
   }
 
-  post(status: Status): Observable<Status> {
-
-    return this._http.post(this._config.status.uri, status)
-                      .pipe(this.handleError<Status>("post error")) as Observable<Status>
-
+ saveStatus(status: Status): Observable<Status> {
+    return this._http.post<Status>(this._config.status.uri, status, this.httpOptions)
+                      .pipe(
+                        tap(newGuest => console.log(`saved Status: ${JSON.stringify(newGuest)}\n`)),
+                        catchError(this.handleError<Status>("post error"))
+                      );
   }
 
   put(status: Status): Observable<Status> {

@@ -23,11 +23,12 @@ export class DurationService {
                         catchError(this.handleError<Duration[]>("Error in get Guest")));
   }
 
-  post(duration: Duration): Observable<Duration> {
-    return this._http.post(this._config.duration.uri, duration)
+  saveDuration(duration: Duration): Observable<Duration> {
+    return this._http.post<Duration>(this._config.duration.uri, duration, this.httpOptions)
                       .pipe(
-                        tap(_ => console.log('Posting duration')),
-                        this.handleError<Duration>("post error"));
+                        tap(newDuration => console.log(`saved duration: ${JSON.stringify(newDuration)}`)),
+                        catchError(this.handleError<Duration>("post error"))
+                      );
   }
 
   put(duration: Duration): Observable<Duration> {

@@ -22,7 +22,7 @@ export class ReservationService {
     private _duration: DurationService,
     private _guests: GuestService,
     private _status: StatusService,
-    private _config: Config
+    public _config: Config
   ) {}
 
   getReseravtions(): Observable<Reservation[]> {
@@ -32,9 +32,12 @@ export class ReservationService {
                       catchError(this.handleError<Reservation[]>("Error in get reservation", [])));
   }
 
-  post(reservation: Reservation): Observable<Reservation> {
-    return this._http.post(this._config.reservation.uri, reservation)
-                      .pipe(this.handleError<Reservation>("Error in put reservation"));
+  saveReservation(reservation: Reservation): Observable<Reservation> {
+    return this._http.post<Reservation>(this._config.reservation.uri, reservation, this.httpOptions)
+                      .pipe(
+                        tap(newGuest => console.log(`saved Reservation: ${JSON.stringify(newGuest)}\n`)),
+                        catchError(this.handleError<Reservation>("post error"))
+                      );
   }
 
   put(reservation: Reservation): Observable<Reservation> {
