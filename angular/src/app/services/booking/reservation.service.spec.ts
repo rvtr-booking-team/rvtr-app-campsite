@@ -187,11 +187,11 @@ describe('ReservationService', () => {
     });
 
     it('#delete should return an Observable<Reservation>', () => {
-      service.delete<Reservation>(2).subscribe(reservations =>
+      service.delete(2).subscribe(reservations =>
         expect(reservations.reservationId).toEqual(testReservationId),
         fail
       );
-      const url = `${service._config.reservation.uri}/${dummyReservations.reservationId}`;
+      const url = `${service.config.reservation.uri}/${dummyReservations.reservationId}`;
       const req = httpTestingController.expectOne(url);
       expect(req.request.method).toEqual('DELETE');
       req.flush(dummyReservations);
