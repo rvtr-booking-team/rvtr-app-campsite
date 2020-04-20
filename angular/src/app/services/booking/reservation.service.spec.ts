@@ -16,7 +16,7 @@ fdescribe('ReservationService', () => {
       providers: [ReservationService, Config]
     });
 
-    //Instantiate the services by injecting them in the TestBed
+    // Instantiate the services by injecting them in the TestBed
     service = TestBed.inject(ReservationService);
     httpTestingController = TestBed.inject(HttpTestingController);
     config = TestBed.inject(Config);
@@ -46,32 +46,35 @@ fdescribe('ReservationService', () => {
           notes: 'accommodations ...'
         },
       ] as Reservation[];
-    })
+    });
 
     it('should return an Observable<Reservation[]>', () => {
       service.getReseravtions().subscribe(
-        reservations => expect(reservations).toEqual(dummyReservations, "should expect list of reservations"),
+        reservations => expect(reservations).toEqual(dummyReservations, 'should expect list of reservations'),
         fail
       );
 
       const req = httpTestingController.expectOne(config.reservation.uri);
-      expect(req.request.method).toEqual("GET");
+      expect(req.request.method).toEqual('GET');
 
       req.flush(dummyReservations);
     });
-    it("should convert 404 into empty hero", () => {
+
+    // Test 3  httpcontoller should returns the 404 error into empty heroes
+    it('should convert 404 into empty hero', () => {
       service.getReseravtions().subscribe(
-        data => expect(data.length).toEqual(0, "should convert 404 error to 0 heroes"),
+        data => expect(data.length).toEqual(0, 'should convert 404 error to 0 heroes'),
         fail
-      )
+      );
+
       const req = httpTestingController.expectOne(service._config.reservation.uri);
-      let msg = "404 Error";
-      req.flush(msg, {status: 404, statusText: "Not found"})
+      const msg = '404 Error';
+      req.flush(msg, {status: 404, statusText: 'Not found'});
     });
 
-  })
+  });
 
-  describe("#saveReservation", () => {
+  describe('#saveReservation', () => {
     let newReservation: Reservation;
     beforeEach(() => {
       newReservation = {
@@ -93,22 +96,25 @@ fdescribe('ReservationService', () => {
             {
               guestId: 1,
               guestType: 'adult',
-              guessFirstName: 'John',
-              guessLastName: 'Smith'
+              guestFirstName: 'John',
+              guestLastName: 'Smith'
             },
           ],
           notes: 'accommodations ...'
-        }
+        };
     });
+
+    // Testing httpPost response
     it('Expects to return successful if reservation posted correctly', () => {
       service.saveReservation(newReservation).subscribe(
-        data => expect(data).toEqual(newReservation, "should return a reservation if saved successfully")
+        data => expect(data).toEqual(newReservation, 'should return a reservation if saved successfully')
       );
 
       const req = httpTestingController.expectOne(service._config.reservation.uri);
-      expect(req.request.method).toEqual("POST");
+      expect(req.request.method).toEqual('POST');
       expect(req.request.body).toEqual(newReservation);
       const expectedResponse = new HttpResponse({ status: 201, statusText: 'Created', body: newReservation });
+      // It delivers a HttpEvent on the response stream for this request
       req.event(expectedResponse);
     });
   });
@@ -135,8 +141,8 @@ fdescribe('ReservationService', () => {
             {
               guestId: 1,
               guestType: 'adult',
-              guessFirstName: 'John',
-              guessLastName: 'Smith'
+              guestFirstName: 'John',
+              guestLastName: 'Smith'
             },
           ],
           notes: 'accommodations ...'

@@ -29,8 +29,8 @@ describe('GuestService', () => {
 
     beforeEach(() => {
       ExpectedGuests = [
-        { guestId: 1, guestType: 'Single', guessFirstName: 'Tango', guessLastName: 'Tew'},
-        { guestId: 2, guestType: 'Family', guessFirstName: 'Tango', guessLastName: 'Tew'}
+        { guestId: 1, guestType: 'Single', guestFirstName: 'Tango', guestLastName: 'Tew'},
+        { guestId: 2, guestType: 'Family', guestFirstName: 'Tango', guestLastName: 'Tew'}
       ] as Guest[];
     });
 
@@ -63,7 +63,7 @@ describe('GuestService', () => {
   describe('#saveGuest', () => {
     let newGuest: Guest;
     beforeEach(() => {
-      newGuest = { guestId: 1, guestType: 'Single', guessFirstName: 'Tango', guessLastName: 'Tew'};
+      newGuest = { guestId: 1, guestType: 'Single', guestFirstName: 'Tango', guestLastName: 'Tew'};
     });
 
      //Testing httpPost response

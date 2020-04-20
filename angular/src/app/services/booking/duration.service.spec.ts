@@ -59,9 +59,9 @@ describe('DurationService', () => {
       });
     });
 
-    it('should convert 404 into empty duration', () => {
+    it("should convert 404 into empty duration", () => {
       service.getDurations().subscribe(durations =>
-        expect(durations.length).toEqual(0, 'should convert 404 error to 0 duration'),
+        expect(durations.length).toEqual(0, "should convert 404 error to 0 duration"),
         fail
       );
 

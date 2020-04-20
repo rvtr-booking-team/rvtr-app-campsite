@@ -38,11 +38,13 @@ export class ReservationService {
                         catchError(this.handleError<Reservation>("Put error"))
                       );
   }
-
-  delete(reservationId: number): Observable<Reservation> {
+  
+  delete<Reservation>(reservationId: number): Observable<Reservation> {
     const url = `${this._config.reservation.uri}/${reservationId}`;
-    return this._http.delete(url)
-                .pipe(this.handleError<Reservation>("Error in delete reservation"));
+    return this._http.delete<Reservation>(url)
+                .pipe(
+                  tap(_ => console.log('Deleting reservation')),
+                  catchError(this.handleError<Reservation>("Error in delete Reservation")));
   }
 
   private handleError<T> (operation = 'operation', result?: T) {

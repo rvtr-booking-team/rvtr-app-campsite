@@ -9,7 +9,6 @@
  */
 
 export class Status {
-	statusId: number;
-	statusName: string;
-	constructor() {}
+  statusId: number;
+  statusName: string;
 }

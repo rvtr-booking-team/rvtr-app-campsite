@@ -28,7 +28,7 @@ describe('StatusService', () => {
   });
 
   describe('#getStatus', () => {
-    let dummyStatus : Status[];
+    let dummyStatus: Status[];
 
     beforeEach(() => {
 
@@ -54,22 +54,22 @@ describe('StatusService', () => {
                             fail
                           );
 
-      const req = httpTestingController.expectOne(service._config.status.uri);
+      const req = httpTestingController.expectOne(service.config.status.uri);
       expect(req.request.method).toEqual('GET');
 
       req.flush(dummyStatus);
     });
 
-      //Test 3  httpcontoller should returns the 404 error into empty heroes
+      // Test 3 httpcontoller should returns the 404 error into empty heroes
     it('should convert 404 into empty status', () => {
       service.getStatus().subscribe(
         data => expect(data.length).toEqual(0, 'should convert 404 error to 0 status'),
         fail
       );
 
-      const req = httpTestingController.expectOne(service._config.status.uri);
-      let msg = '404 Error';
-      req.flush(msg, {status: 404, statusText: 'Not found'})
+      const req = httpTestingController.expectOne(service.config.status.uri);
+      const msg = '404 Error';
+      req.flush(msg, {status: 404, statusText: 'Not found'});
     });
   });
 
@@ -80,20 +80,20 @@ describe('StatusService', () => {
       newStatus =  { statusId: 1, statusName: 'Pending'};
     });
 
-    //Testing httpPost response
+    // Testing httpPost response
     it('Expects to return successful if status posted correctly', () => {
 
       service.saveStatus(newStatus).subscribe(
         data => expect(data).toEqual(newStatus, 'should return a status if saved successfully')
       );
 
-      const req = httpTestingController.expectOne(service._config.status.uri);
+      const req = httpTestingController.expectOne(service.config.status.uri);
       expect(req.request.method).toEqual('POST');
       expect(req.request.body).toEqual(newStatus);
 
       // Expect server to return the status after POST
       const expectedResponse = new HttpResponse({ status: 201, statusText: 'Created', body: newStatus });
-      //It delivers a HttpEvent on the response stream for this request
+      // It delivers a HttpEvent on the response stream for this request
       req.event(expectedResponse);
     });
   });
@@ -105,12 +105,12 @@ describe('StatusService', () => {
       newStatus =  { statusId: 1, statusName: 'Pending'};
     });
 
-    it('#put should return an Observable<Status>', () =>{
-      service.putStatus<Status>(newStatus).subscribe(status =>
+    it('#put should return an Observable<Status>', () => {
+      service.putStatus(newStatus).subscribe(status =>
         expect(status.statusName).toEqual('Pending'),
         fail
         );
-      let req = httpTestingController.expectOne(service._config.status.uri);
+      const req = httpTestingController.expectOne(service.config.status.uri);
       expect(req.request.method).toEqual('PUT');
       req.flush(newStatus);
     });
@@ -123,15 +123,14 @@ describe('StatusService', () => {
       newStatus =  { statusId: 1, statusName: 'Pending'} as Status;
     });
     it('#delete should return an Observable<Status>', () => {
-      service.deleteStatus<Status>(1).subscribe(status =>
+      service.deleteStatus(1).subscribe(status =>
         expect(status.statusName).toEqual('Pending'),
         fail
       );
-      const url = `${service._config.status.uri}/${newStatus.statusId}`;
-      let req = httpTestingController.expectOne(url);//config.duration.uri);
+      const url = `${service.config.status.uri}/${newStatus.statusId}`;
+      const req = httpTestingController.expectOne(url);
       expect(req.request.method).toEqual('DELETE');
       req.flush(newStatus);
     });
   });
-
 });

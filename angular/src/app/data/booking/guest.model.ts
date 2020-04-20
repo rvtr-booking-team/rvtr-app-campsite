@@ -11,8 +11,7 @@
 
 export class Guest {
   guestId: number;
-	guestType: string;
-  guessFirstName: string;
-  guessLastName: string;
-	constructor() {}
+  guestType: string;
+  guestFirstName: string;
+  guestLastName: string;
 }
