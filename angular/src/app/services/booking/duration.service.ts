@@ -18,7 +18,7 @@ export class DurationService {
     return this._http.get<Duration[]>(this._config.duration.uri)
                       .pipe(
                         tap(_ => console.log('Getting duration')),
-                        catchError(this.handleError<Duration[]>("Error in get Guest")));
+                        catchError(this.handleError<Duration[]>("Error in get Guest", [])));
   }
 
   saveDuration<Duration>(duration: Duration): Observable<Duration> {
