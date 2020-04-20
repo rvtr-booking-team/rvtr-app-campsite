@@ -5,6 +5,6 @@
  */
 
 export class Status {
-	statusId: number;
-	statusName: string;
+  statusId: number;
+  statusName: string;
 }
