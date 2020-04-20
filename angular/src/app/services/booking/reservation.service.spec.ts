@@ -5,7 +5,7 @@ import { Reservation } from '../../data/booking/reservation.model';
 import { Config } from './config.booking';
 import { HttpResponse } from '@angular/common/http';
 
-fdescribe('ReservationService', () => {
+describe('ReservationService', () => {
   let service: ReservationService;
   let httpTestingController: HttpTestingController;
   let config: Config;
