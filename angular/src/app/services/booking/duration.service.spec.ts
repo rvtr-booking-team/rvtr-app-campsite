@@ -51,14 +51,7 @@ describe('DurationService', () => {
         expect(durations).toEqual(dummyDurations),
         fail
       );
-
-<<<<<<< HEAD
-      const req = httpMock.expectOne(service._config.duration.uri)
-      expect(req.request.method).toEqual('GET');
-      req.flush(dummyDurations);
-      });
-  });
-=======
+      
       const req = httpMock.expectOne(service._config.duration.uri)//config.duration.uri);
       expect(req.request.method).toEqual('GET');
       req.flush(dummyDurations);
@@ -139,5 +132,4 @@ describe('DurationService', () => {
         req.flush(dummyDuration);
       });
     });
->>>>>>> add all http tests for duration [#172282272]
 });
