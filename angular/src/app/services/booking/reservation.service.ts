@@ -6,6 +6,7 @@ import { GuestService } from './guest.service';
 import { StatusService } from './status.service';
 import { Observable, of } from 'rxjs';
 import { Config } from './config.booking';
+import { tap, catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -24,9 +25,11 @@ export class ReservationService {
     private _config: Config
   ) {}
 
-  get(): Observable<Reservation[]> {
-    return this._http.get(this._config.reservation.uri)
-                    .pipe(this.handleError<Reservation[]>("Error in get reservation"));
+  getReseravtions(): Observable<Reservation[]> {
+    return this._http.get<Reservation[]>(this._config.reservation.uri)
+                    .pipe(
+                      tap(_ => console.log("Getting Reservations")),
+                      catchError(this.handleError<Reservation[]>("Error in get reservation", [])));
   }
 
   post(reservation: Reservation): Observable<Reservation> {

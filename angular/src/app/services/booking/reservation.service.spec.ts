@@ -8,7 +8,6 @@ import { Config } from './config.booking';
 describe('ReservationService', () => {
   let service: ReservationService;
   let httpMock: HttpTestingController;
-  let injector: TestBed;
   let config: Config;
 
   beforeEach(() => {
@@ -16,10 +15,11 @@ describe('ReservationService', () => {
       imports: [HttpClientTestingModule],
       providers: [ReservationService, Config]
     });
-    injector = getTestBed();
-    service = injector.get(ReservationService);
-    httpMock = injector.get(HttpTestingController);
-    config = injector.get(Config);
+
+    //Instantiate the services by injecting them in the TestBed
+    service = TestBed.inject(ReservationService);
+    httpMock = TestBed.inject(HttpTestingController);
+    config = TestBed.inject(Config);
   });
 
   describe('#getReservations', () => {
@@ -56,13 +56,14 @@ describe('ReservationService', () => {
     })
 
     it('should return an Observable<Reservation[]>', () => {
-      service.get().subscribe(
+      service.getReseravtions().subscribe(
         reservations => expect(reservations).toEqual(dummyReservations, "should expect list of reservations"),
         fail
       );
 
       const req = httpMock.expectOne(config.reservation.uri);
-      expect(req.request.method).toBe("GET");
+      expect(req.request.method).toEqual("GET");
+
       req.flush(dummyReservations);
     });
   })

@@ -5,7 +5,7 @@ import { GuestService } from './guest.service';
 import { Config } from './config.booking';
 import { Guest } from 'src/app/data/booking/guest.model';
 
-fdescribe('GuestService', () => {
+describe('GuestService', () => {
   let service: GuestService;
   let config: Config;
   let httpClient: HttpClient;
