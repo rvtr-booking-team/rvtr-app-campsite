@@ -142,14 +142,14 @@ describe('ReservationService', () => {
             },
           ],
           notes: 'accommodations ...'
-        }
+        };
     });
-    it('#put should return an Observable<Reservation>', () =>{
+    it('#put should return an Observable<Reservation>', () => {
       service.putReservation(newReservation).subscribe(reservation =>
         expect(reservation.notes).toEqual('accommodations ...'),
         fail
         );
-      let req = httpTestingController.expectOne(service.config.reservation.uri);
+      const req = httpTestingController.expectOne(service.config.reservation.uri);
       expect(req.request.method).toEqual('PUT');
       req.flush(newReservation);
     });
