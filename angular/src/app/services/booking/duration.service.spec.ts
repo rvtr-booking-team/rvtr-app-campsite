@@ -47,17 +47,27 @@ describe('DurationService', () => {
       ] as Duration[];
     });
 
-    it('#get should return an Observable<Duration[]>', () => {
+    it('should return an Observable<Duration[]>', () => {
       service.getDurations().subscribe(durations =>
         expect(durations).toEqual(dummyDurations),
         fail
       );
 
-      const req = httpTestingController.expectOne(service._config.duration.uri)//config.duration.uri);
+      const req = httpTestingController.expectOne(service._config.duration.uri);
       expect(req.request.method).toEqual('GET');
-
       req.flush(dummyDurations);
       });
+    });
+
+    it("should convert 404 into empty duration", () => {
+      service.getDurations().subscribe(durations => 
+        expect(durations.length).toEqual(0, "should convert 404 error to 0 duration"),
+        fail
+      );
+
+      const req = httpTestingController.expectOne(service._config.duration.uri);
+      let msg = "404 Error";
+      req.flush(msg, {status: 404, statusText: "Not found"})
     });
 
     describe('#postDuration', () => {
@@ -73,7 +83,7 @@ describe('DurationService', () => {
         } as Duration;
       });
 
-      it('#post should return and Observable<Duration>', () => {
+      it('should return and Observable<Duration>', () => {
         service.saveDuration<Duration>(dummyDuration).subscribe(durations =>
           expect(durations.checkOut).toEqual(testDate),
           fail
