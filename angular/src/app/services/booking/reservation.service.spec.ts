@@ -66,12 +66,10 @@ describe('ReservationService', () => {
         data => expect(data.length).toEqual(0, 'should convert 404 error to 0 heroes'),
         fail
       );
-
-      const req = httpTestingController.expectOne(service._config.reservation.uri);
+      const req = httpTestingController.expectOne(service.config.reservation.uri);
       const msg = '404 Error';
       req.flush(msg, {status: 404, statusText: 'Not found'});
     });
-
   });
 
   describe('#saveReservation', () => {
@@ -104,13 +102,11 @@ describe('ReservationService', () => {
         };
     });
 
-    // Testing httpPost response
     it('Expects to return successful if reservation posted correctly', () => {
       service.saveReservation(newReservation).subscribe(
         data => expect(data).toEqual(newReservation, 'should return a reservation if saved successfully')
       );
-
-      const req = httpTestingController.expectOne(service._config.reservation.uri);
+      const req = httpTestingController.expectOne(service.config.reservation.uri);
       expect(req.request.method).toEqual('POST');
       expect(req.request.body).toEqual(newReservation);
       const expectedResponse = new HttpResponse({ status: 201, statusText: 'Created', body: newReservation });
@@ -153,7 +149,7 @@ describe('ReservationService', () => {
         expect(reservation.notes).toEqual('accommodations ...'),
         fail
         );
-      let req = httpTestingController.expectOne(service._config.reservation.uri);
+      let req = httpTestingController.expectOne(service.config.reservation.uri);
       expect(req.request.method).toEqual('PUT');
       req.flush(newReservation);
     });
