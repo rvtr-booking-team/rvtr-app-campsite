@@ -107,8 +107,8 @@ describe('ReservationService', () => {
             {
               guestId: 1,
               guestType: 'adult',
-              guessFirstName: 'John',
-              guessLastName: 'Smith'
+              guestFirstName: 'John',
+              guestLastName: 'Smith'
             },
           ],
           notes: 'accommodations ...'

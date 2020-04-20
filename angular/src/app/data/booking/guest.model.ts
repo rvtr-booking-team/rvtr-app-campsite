@@ -1,13 +1,12 @@
 
 /**
- * Represents the number of guesses reserving the rooms.
+ * Represents the number of guests reserving the rooms.
  * class
  */
 
 export class Guest {
-	guestId: number;
-	guestType: string;
-  guessFirstName: string;
-  guessLastName: string;
-	constructor() {}
+  guestId: number;
+  guestType: string;
+  guestFirstName: string;
+  guestLastName: string;
 }
