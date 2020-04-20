@@ -119,7 +119,7 @@ describe('ReservationService', () => {
     });
   });
 
-  describe('#putStatus', () => {
+  describe('#putReservation', () => {
     let newReservation: Reservation;
     beforeEach(() => {
       newReservation = {
@@ -148,7 +148,7 @@ describe('ReservationService', () => {
           notes: 'accommodations ...'
         }
     });
-    it('#put should return an Observable<Status>', () =>{
+    it('#put should return an Observable<Reservation>', () =>{
       service.putReservation(newReservation).subscribe(reservation =>
         expect(reservation.notes).toEqual('accommodations ...'),
         fail
@@ -156,6 +156,49 @@ describe('ReservationService', () => {
       let req = httpTestingController.expectOne(service._config.reservation.uri);
       expect(req.request.method).toEqual('PUT');
       req.flush(newReservation);
+    });
+  });
+
+  describe('#deleteReservation', () => {
+    let dummyReservations: Reservation;
+    const testReservationId = 2;
+    beforeEach(() => {
+      dummyReservations = {
+        reservationId: testReservationId,
+        accountId: 1,
+        rentalId: 1,
+        duration: {
+          durationId: 1,
+          checkIn: new Date(2020, 2, 4),
+          checkOut: new Date(2020, 2, 5),
+          creationDate: new Date(2020, 2, 2),
+          modifiedDate: new Date(2020, 2, 3)
+        },
+        status: {
+          statusId: 1,
+          statusName: 'Pending'
+        },
+        guests: [
+          {
+            guestId: 1,
+            guestType: 'adult',
+            guestFirstName: 'John',
+            guestLastName: 'Smith'
+          },
+        ],
+        notes: 'accommodations ...'
+      } as Reservation;
+    });
+
+    it('#delete should return an Observable<Reservation>', () => {
+      service.delete<Reservation>(2).subscribe(reservations =>
+        expect(reservations.reservationId).toEqual(testReservationId),
+        fail
+      );
+      const url = `${service._config.reservation.uri}/${dummyReservations.reservationId}`;
+      const req = httpTestingController.expectOne(url);
+      expect(req.request.method).toEqual('DELETE');
+      req.flush(dummyReservations);
     });
   });
 });
