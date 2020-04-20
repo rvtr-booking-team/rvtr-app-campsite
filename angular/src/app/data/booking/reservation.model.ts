@@ -13,6 +13,6 @@ export class Reservation {
   rentalId: number;
   duration: Duration;
   status: Status;
-  guests: Array<Guest>;
+  guests: Guest[];
   notes: string;
 }

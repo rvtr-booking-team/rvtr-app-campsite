@@ -5,6 +5,8 @@ import { DurationService } from './duration.service';
 import { GuestService } from './guest.service';
 import { StatusService } from './status.service';
 import { Observable, of } from 'rxjs';
+import { Config } from './config.booking';
+import { tap, catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -19,26 +21,29 @@ export class ReservationService {
     private _http: HttpClient,
     private _duration: DurationService,
     private _guests: GuestService,
-    private _status: StatusService
+    private _status: StatusService,
+    private _config: Config
   ) {}
 
-  get(): Observable<Reservation[]> {
-    return this._http.get(this.url)
-                      .pipe(this.handleError("Error in get reservation"));
+  getReseravtions(): Observable<Reservation[]> {
+    return this._http.get<Reservation[]>(this._config.reservation.uri)
+                    .pipe(
+                      tap(_ => console.log("Getting Reservations")),
+                      catchError(this.handleError<Reservation[]>("Error in get reservation", [])));
   }
 
   post(reservation: Reservation): Observable<Reservation> {
-    return this._http.post(this.url, reservation)
-                      .pipe(this.handleError<Reservation>("Error in post reservation"));
+    return this._http.post(this._config.reservation.uri, reservation)
+                      .pipe(this.handleError<Reservation>("Error in put reservation"));
   }
 
   put(reservation: Reservation): Observable<Reservation> {
-    return this._http.put(this.url, reservation)
+    return this._http.put(this._config.reservation.uri, reservation)
                       .pipe(this.handleError<Reservation>("Error in put reservation"));
   }
 
   delete(reservationId: number): Observable<Reservation> {
-    const url = `${this.url}/${reservationId}`;
+    const url = `${this._config.reservation.uri}/${reservationId}`;
     return this._http.delete(url)
                 .pipe(this.handleError<Reservation>("Error in delete reservation"));
   }
