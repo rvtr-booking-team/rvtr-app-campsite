@@ -6,18 +6,18 @@ import { Config } from './config.booking';
 import { catchError, tap} from 'rxjs/operators';
 
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({providedIn: 'root'})
+
 export class DurationService {
-  url: string = "api/duration";
+
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json'})
   }
-  constructor(private _http: HttpClient, private _config: Config) { }
+
+  constructor(private _http: HttpClient, public _config: Config) { }
 
   getDurations(): Observable<Duration[]> {
-    return this._http.get<Duration[]>('api/duration')
+    return this._http.get<Duration[]>(this._config.duration.uri)
                       .pipe(
                         tap(_ => console.log('Getting duration')),
                         catchError(this.handleError<Duration[]>("Error in get Guest")));

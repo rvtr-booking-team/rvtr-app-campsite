@@ -1,8 +1,7 @@
-import { TestBed, getTestBed } from '@angular/core/testing';
+import { TestBed} from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { Config } from './config.booking';
 import { DurationService } from './duration.service';
-import { HttpErrorResponse } from '@angular/common/http';
 import { Duration } from 'src/app/data/booking/duration.model';
 
 describe('DurationService', () => {
@@ -53,24 +52,9 @@ describe('DurationService', () => {
         fail
       );
 
-      const req = httpMock.expectOne('api/duration')//config.duration.uri);
+      const req = httpMock.expectOne(service._config.duration.uri)
       expect(req.request.method).toEqual('GET');
       req.flush(dummyDurations);
       });
-
-          //404 error testing
-    // it('can test for 404 error', () => {
-    //   const emsg = '404 Error Test';
-
-    //   service.get().subscribe( data =>
-    //     fail('should have failed with 404 error'),
-    //     (error: HttpErrorResponse) => {
-    //       expect(error.status).toEqual(404, 'status');
-    //       expect(error.error).toEqual(emsg, 'message');
-
-    //   });
-    //   let req = httpMock.expectOne(`${config.duration.uri}`);
-    //   req.flush(emsg, {status: 404, statusText: 'Not Found'});
-    // });
   });
 });
