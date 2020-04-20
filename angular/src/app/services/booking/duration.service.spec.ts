@@ -47,58 +47,91 @@ describe('DurationService', () => {
       ] as Duration[];
     });
 
-    it('should return an Observable<Duration[]>', () => {
+    it('#get should return an Observable<Duration[]>', () => {
       service.getDurations().subscribe(durations =>
         expect(durations).toEqual(dummyDurations),
         fail
       );
 
-      const req = httpTestingController.expectOne(service._config.duration.uri)
+      const req = httpTestingController.expectOne(service._config.duration.uri)//config.duration.uri);
       expect(req.request.method).toEqual('GET');
 
       req.flush(dummyDurations);
       });
+    });
 
-  //     //Test 2  httpcontoller should returns the 404 error into empty heroes
-  //   it("should convert 404 into empty duration", () => {
-  //     service.getDurations().subscribe(
-  //       data => expect(data.length).toEqual(0, "should convert 404 error to 0 duratiopn"),
-  //       fail
-  //     )
+    describe('#postDuration', () => {
+      let dummyDuration: Duration;
+      let testDate = new Date(2020, 2, 5);
+      beforeEach(() => {
+        dummyDuration = {
+          durationId: 1,
+          checkIn: new Date(2020, 2, 4),
+          checkOut: testDate,
+          creationDate: new Date(2020, 2, 2),
+          modifiedDate: new Date(2020, 2, 3)
+        } as Duration;
+      });
 
-  //     const req = httpTestingController.expectOne(service._config.duration.uri);
-  //     let msg = "404 Error";
-  //     req.flush(msg, {status: 404, statusText: "Not found"})
-  //   });
-  // });
+      it('#post should return and Observable<Duration>', () => {
+        service.saveDuration<Duration>(dummyDuration).subscribe(durations =>
+          expect(durations.checkOut).toEqual(testDate),
+          fail
+        );
 
-  // describe("#saveDuration", () => {
-  //   let newDuration: Duration;
-  //   beforeEach(() => {
-  //     newDuration =  {
-  //           durationId: 2,
-  //           checkIn: new Date(2020, 2, 4),
-  //           checkOut: new Date(2020, 2, 5),
-  //           creationDate: new Date(2020, 2, 2),
-  //           modifiedDate: new Date(2020, 2, 3)
-  //         };
-  //   });
+        let req = httpTestingController.expectOne(service._config.duration.uri);//config.duration.uri);
+        expect(req.request.method).toEqual('POST');
+        req.flush(dummyDuration);
+      });
+    });
 
-  //   //Testing httpPost response
-  //   it("Expects to return successful if duration posted correctly", () => {
-  //     service.saveDuration(newDuration).subscribe(
-  //       data => expect(data).toEqual(newDuration, "should return a duration if saved successfully"),
-  //       fail
-  //     );
+    describe('#putDuration', () => {
+      let dummyDuration: Duration;
+      let testDate = new Date(2020, 2, 5);
+      beforeEach(() => {
+        dummyDuration = {
+          durationId: 1,
+          checkIn: new Date(2020, 2, 4),
+          checkOut: testDate,
+          creationDate: new Date(2020, 2, 2),
+          modifiedDate: new Date(2020, 2, 3)
+        } as Duration;
+      });
 
-  //     const req = httpTestingController.expectOne(service._config.duration.uri);
-  //     expect(req.request.method).toEqual("POST");
-  //     expect(req.request.body).toEqual(newDuration);
+      it('#put should return an Observable<Duration>', () => {
+        service.putDuration<Duration>(dummyDuration).subscribe(durations =>
+          expect(durations.checkOut).toEqual(testDate),
+          fail
+        );
 
-  //     // Expect server to return the duration after POST
-  //     const expectedResponse = new HttpResponse({ status: 201, statusText: 'Created', body: newDuration });
-  //     //It delivers a HttpEvent on the response stream for this request
-  //     req.event(expectedResponse);
-  //   });
-  });
+        let req = httpTestingController.expectOne(service._config.duration.uri);//config.duration.uri);
+        expect(req.request.method).toEqual('PUT');
+        req.flush(dummyDuration);
+      });
+    });
+
+    describe('#deleteDuration', () => {
+      let dummyDuration: Duration;
+      let testDate = new Date(2020, 2, 5);
+      beforeEach(() => {
+        dummyDuration = {
+          durationId: 1,
+          checkIn: new Date(2020, 2, 4),
+          checkOut: testDate,
+          creationDate: new Date(2020, 2, 2),
+          modifiedDate: new Date(2020, 2, 3)
+        } as Duration;
+      });
+
+      it('#delete should return an Observable<Duration>', () => {
+        service.deleteDuration<Duration>(1).subscribe(durations =>
+          expect(durations.checkOut).toEqual(testDate),
+          fail
+        );
+        const url = `${service._config.duration.uri}/${dummyDuration.durationId}`;
+        let req = httpTestingController.expectOne(url);//config.duration.uri);
+        expect(req.request.method).toEqual('DELETE');
+        req.flush(dummyDuration);
+      });
+    });
 });
