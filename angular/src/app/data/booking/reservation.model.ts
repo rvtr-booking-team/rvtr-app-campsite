@@ -3,8 +3,16 @@ import { Duration } from './duration.model';
 import { Status } from './status.model';
 
 /**
- * Represents Reservation object model.
- * class
+ * Represents the _Reservation_ model
+ *
+ * ```yaml
+ * reservationId: number;
+ * accountId: number;
+ * rentalId: number;
+ * status: Status;
+ * duration: Duration;
+ * guests: Guest[];
+ * ```
  */
 
 export class Reservation {

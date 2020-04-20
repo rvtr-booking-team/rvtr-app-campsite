@@ -1,7 +1,11 @@
 
 /**
- * Represents the reservation status(pending, complete, ...).
- * class
+ * Represents the _Status_ model
+ *
+ * ```yaml
+ * statusId: number;
+ * statusName: string;
+ * ```
  */
 
 export class Status {

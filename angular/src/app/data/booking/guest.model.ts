@@ -1,11 +1,16 @@
-
 /**
- * Represents the number of guesses reserving the rooms.
- * class
+ * Represents the _Guest_ model
+ *
+ * ```yaml
+ * guestId: number;
+ * guestType: string;
+ * guestFirstName: string;
+ * guestLastName: string;
+ * ```
  */
 
 export class Guest {
-	guestId: number;
+  guestId: number;
 	guestType: string;
   guessFirstName: string;
   guessLastName: string;

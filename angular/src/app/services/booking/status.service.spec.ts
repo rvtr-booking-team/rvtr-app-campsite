@@ -34,11 +34,11 @@ describe('StatusService', () => {
 
       dummyStatus = [
         {
-          statusId: 1, statusName: "Pending"
+          statusId: 1, statusName: 'Pending'
         },
         {
           statusId: 2,
-          statusName: "complete"
+          statusName: 'complete'
         }
       ] as Status[];
     });
@@ -61,34 +61,34 @@ describe('StatusService', () => {
     });
 
       //Test 3  httpcontoller should returns the 404 error into empty heroes
-    it("should convert 404 into empty status", () => {
+    it('should convert 404 into empty status', () => {
       service.getStatus().subscribe(
-        data => expect(data.length).toEqual(0, "should convert 404 error to 0 status"),
+        data => expect(data.length).toEqual(0, 'should convert 404 error to 0 status'),
         fail
       );
 
       const req = httpTestingController.expectOne(service._config.status.uri);
-      let msg = "404 Error";
-      req.flush(msg, {status: 404, statusText: "Not found"})
+      let msg = '404 Error';
+      req.flush(msg, {status: 404, statusText: 'Not found'})
     });
   });
 
-  describe("#saveStatus", () => {
+  describe('#saveStatus', () => {
     let newStatus: Status;
 
     beforeEach(() => {
-      newStatus =  { statusId: 1, statusName: "Pending"};
+      newStatus =  { statusId: 1, statusName: 'Pending'};
     });
 
     //Testing httpPost response
-    it("Expects to return successful if status posted correctly", () => {
+    it('Expects to return successful if status posted correctly', () => {
 
       service.saveStatus(newStatus).subscribe(
-        data => expect(data).toEqual(newStatus, "should return a status if saved successfully")
+        data => expect(data).toEqual(newStatus, 'should return a status if saved successfully')
       );
 
       const req = httpTestingController.expectOne(service._config.status.uri);
-      expect(req.request.method).toEqual("POST");
+      expect(req.request.method).toEqual('POST');
       expect(req.request.body).toEqual(newStatus);
 
       // Expect server to return the status after POST
@@ -98,16 +98,16 @@ describe('StatusService', () => {
     });
   });
 
-  describe("#putStatus", () => {
+  describe('#putStatus', () => {
     let newStatus: Status;
 
     beforeEach(() => {
-      newStatus =  { statusId: 1, statusName: "Pending"};
+      newStatus =  { statusId: 1, statusName: 'Pending'};
     });
 
     it('#put should return an Observable<Status>', () =>{
       service.putStatus<Status>(newStatus).subscribe(status =>
-        expect(status.statusName).toEqual("Pending"),
+        expect(status.statusName).toEqual('Pending'),
         fail
         );
       let req = httpTestingController.expectOne(service._config.status.uri);
@@ -116,15 +116,15 @@ describe('StatusService', () => {
     });
   });
 
-  describe("#deleteStatus", () => {
+  describe('#deleteStatus', () => {
     let newStatus: Status;
 
     beforeEach(() => {
-      newStatus =  { statusId: 1, statusName: "Pending"} as Status;
+      newStatus =  { statusId: 1, statusName: 'Pending'} as Status;
     });
     it('#delete should return an Observable<Status>', () => {
       service.deleteStatus<Status>(1).subscribe(status =>
-        expect(status.statusName).toEqual("Pending"),
+        expect(status.statusName).toEqual('Pending'),
         fail
       );
       const url = `${service._config.status.uri}/${newStatus.statusId}`;
