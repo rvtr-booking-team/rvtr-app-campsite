@@ -44,11 +44,13 @@ export class ReservationService {
     return this._http.put(this._config.reservation.uri, reservation)
                       .pipe(this.handleError<Reservation>("Error in put reservation"));
   }
-
-  delete(reservationId: number): Observable<Reservation> {
+  
+  delete<Reservation>(reservationId: number): Observable<Reservation> {
     const url = `${this._config.reservation.uri}/${reservationId}`;
-    return this._http.delete(url)
-                .pipe(this.handleError<Reservation>("Error in delete reservation"));
+    return this._http.delete<Reservation>(url)
+                .pipe(
+                  tap(_ => console.log('Deleting reservation')),
+                  catchError(this.handleError<Reservation>("Error in delete Reservation")));
   }
 
   private handleError<T> (operation = 'operation', result?: T) {
