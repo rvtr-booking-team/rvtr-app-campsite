@@ -97,4 +97,41 @@ describe('StatusService', () => {
       req.event(expectedResponse);
     });
   });
+
+  describe("#putStatus", () => {
+    let newStatus: Status;
+
+    beforeEach(() => {
+      newStatus =  { statusId: 1, statusName: "Pending"};
+    });
+
+    it('#put should return an Observable<Status>', () =>{
+      service.putStatus<Status>(newStatus).subscribe(status =>
+        expect(status.statusName).toEqual("Pending"),
+        fail
+        );
+      let req = httpTestingController.expectOne(service._config.status.uri);
+      expect(req.request.method).toEqual('PUT');
+      req.flush(newStatus);
+    });
+  });
+
+  describe("#deleteStatus", () => {
+    let newStatus: Status;
+
+    beforeEach(() => {
+      newStatus =  { statusId: 1, statusName: "Pending"} as Status;
+    });
+    it('#delete should return an Observable<Status>', () => {
+      service.deleteStatus<Status>(1).subscribe(status =>
+        expect(status.statusName).toEqual("Pending"),
+        fail
+      );
+      const url = `${service._config.status.uri}/${newStatus.statusId}`;
+      let req = httpTestingController.expectOne(url);//config.duration.uri);
+      expect(req.request.method).toEqual('DELETE');
+      req.flush(newStatus);
+    });
+  });
+
 });

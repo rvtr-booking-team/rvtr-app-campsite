@@ -23,23 +23,29 @@ export class StatusService {
                         );
   }
 
- saveStatus(status: Status): Observable<Status> {
+ saveStatus<Status>(status: Status): Observable<Status> {
     return this._http.post<Status>(this._config.status.uri, status, this.httpOptions)
                       .pipe(
-                        tap(newGuest => console.log(`saved Status: ${JSON.stringify(newGuest)}\n`)),
+                        tap(newStatus => console.log(`saved Status: ${JSON.stringify(newStatus)}\n`)),
                         catchError(this.handleError<Status>("post error"))
                       );
   }
 
-  put(status: Status): Observable<Status> {
-    return this._http.put(this._config.status.uri, status)
-                      .pipe(this.handleError<Status>("Error in put Status")) as Observable<Status>;
+  putStatus<Status>(status: Status): Observable<Status> {
+    return this._http.put<Status>(this._config.status.uri, status)
+                      .pipe(
+                        tap(newStatus => console.log(`saved Status: ${JSON.stringify(newStatus)}\n`)),
+                        catchError(this.handleError<Status>("Put error"))
+                      );
   }
 
-  delete(statusId: number): Observable<Status> {
+  deleteStatus<Status>(statusId: number): Observable<Status> {
     const url = `${this._config.status.uri}/${statusId}`;
-    return this._http.delete(url)
-                .pipe(this.handleError<Status>("Error in delete Status"));
+    return this._http.delete<Status>(url)
+                .pipe(
+                  tap(newStatus => console.log(`Deleted Status: ${JSON.stringify(newStatus)}\n`)),
+                        catchError(this.handleError<Status>("Delete error"))
+                      );
   }
 
   private handleError<T> (operation = 'operation', result?: T) {
