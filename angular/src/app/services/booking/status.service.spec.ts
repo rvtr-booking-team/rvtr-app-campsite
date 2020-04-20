@@ -27,9 +27,10 @@ describe('StatusService', () => {
   });
 
   describe('#getStatuss', () => {
-    let dummyStatuss : Status[];
+    let dummyStatus : Status[];
+
     beforeEach(() => {
-       dummyStatuss = [
+       dummyStatus = [
         {
           statusId: 1, statusName: "Pending"
         },
@@ -42,14 +43,14 @@ describe('StatusService', () => {
 
     it('should return an Observable<Status[]>', () => {
       service.getStatus().subscribe(
-                          statuses => expect(statuses).toEqual(dummyStatuss),
+                          statuses => expect(statuses).toEqual(dummyStatus),
                           fail
       );
 
       const req = httpTestingController.expectOne(service._config.status.uri)
       expect(req.request.method).toEqual('GET');
 
-      req.flush(dummyStatuss);
+      req.flush(dummyStatus);
 
       });
   });
