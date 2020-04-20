@@ -13,10 +13,10 @@ export class GuestService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json'})
   }
 
-  constructor(private _http: HttpClient, public _config: Config) {}
+  constructor(private http: HttpClient, public config: Config) {}
 
   getGuests(): Observable<Guest[]> {
-    return this._http.get<Guest[]>(this._config.guest.uri)
+    return this.http.get<Guest[]>(this.config.guest.uri)
                      .pipe(
                         tap(_ => console.log("Getting all guests")),
                         catchError(this.handleError<Guest[]>("Error in get Guest", []))
@@ -24,22 +24,28 @@ export class GuestService {
   }
 
   saveGuest(guest: Guest): Observable<Guest> {
-    return this._http.post<Guest>(this._config.guest.uri, guest, this.httpOptions)
+    return this.http.post<Guest>(this.config.guest.uri, guest, this.httpOptions)
                      .pipe(
                             tap(newGuest => console.log(`saved guest was: ${JSON.stringify(newGuest)}\n`)),
                             catchError(this.handleError<Guest>("post error"))
                       );
   }
 
-  put(guest: Guest): Observable<Guest> {
-    return this._http.put(this._config.guest.uri, guest)
-                      .pipe(this.handleError<Guest>("Error in put Guest"));
+  putGuest(guest: Guest): Observable<Guest> {
+    return this.http.put<Guest>(this.config.guest.uri, guest)
+                      .pipe(
+                        tap(newGuest => console.log(`saved Status: ${JSON.stringify(newGuest)}\n`)),
+                        catchError(this.handleError<Guest>('Put error'))
+                      );
   }
 
-  delete(guestId: number): Observable<Guest> {
-    const url = `${this._config.guest.uri}/${guestId}`;
-    return this._http.delete(url)
-                .pipe(this.handleError<Guest>("Error in deleting guest"));
+  deleteGuest(guestId: number): Observable<Guest> {
+    const url = `${this.config.guest.uri}/${guestId}`;
+    return this.http.delete<Guest>(url)
+                .pipe(
+                  tap(newGuest => console.log(`saved Status: ${JSON.stringify(newGuest)}\n`)),
+                  catchError(this.handleError<Guest>('Put error'))
+                      );
   }
 
  private handleError<T> (operation = 'operation', result?: T) {

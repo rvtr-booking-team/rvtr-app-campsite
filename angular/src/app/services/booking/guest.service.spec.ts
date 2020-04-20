@@ -29,8 +29,8 @@ describe('GuestService', () => {
 
     beforeEach(() => {
       ExpectedGuests = [
-        { guestId: 1, guestType: 'Single', guestFirstName: 'Tango', guestLastName: 'Tew'},
-        { guestId: 2, guestType: 'Family', guestFirstName: 'Tango', guestLastName: 'Tew'}
+        { guestId: 1, guestType: "Single", guestFirstName: "Tango", guestLastName: "Tew"},
+        { guestId: 2, guestType: "Family", guestFirstName: "Tango", guestLastName: "Tew"}
       ] as Guest[];
     });
 
@@ -40,8 +40,8 @@ describe('GuestService', () => {
         guests => expect(guests).toEqual(ExpectedGuests, 'should expect list of guests')
       );
 
-      const req = httpTestingController.expectOne(service._config.guest.uri);
-      expect(req.request.method).toEqual('GET');
+      const req = httpTestingController.expectOne(service.config.guest.uri);
+      expect(req.request.method).toEqual("GET");
 
       req.flush(ExpectedGuests);
     });
@@ -53,9 +53,9 @@ describe('GuestService', () => {
         fail
       )
 
-      const req = httpTestingController.expectOne(service._config.guest.uri);
-      let msg = '404 Error';
-      req.flush(msg, {status: 404, statusText: 'Not found'})
+      const req = httpTestingController.expectOne(service.config.guest.uri);
+      let msg = "404 Error";
+      req.flush(msg, {status: 404, statusText: "Not found"})
     });
 
   });
@@ -63,7 +63,7 @@ describe('GuestService', () => {
   describe('#saveGuest', () => {
     let newGuest: Guest;
     beforeEach(() => {
-      newGuest = { guestId: 1, guestType: 'Single', guestFirstName: 'Tango', guestLastName: 'Tew'};
+      newGuest = { guestId: 1, guestType: "Single", guestFirstName: "Tango", guestLastName: "Tew"};
     });
 
      //Testing httpPost response
@@ -73,14 +73,49 @@ describe('GuestService', () => {
         data => expect(data).toEqual(newGuest, 'should return a guest if saved successfully')
       );
 
-      const req = httpTestingController.expectOne(service._config.guest.uri);
-      expect(req.request.method).toEqual('POST');
+      const req = httpTestingController.expectOne(service.config.guest.uri);
+      expect(req.request.method).toEqual("POST");
       expect(req.request.body).toEqual(newGuest);
 
       // Expect server to return the guest after POST
       const expectedResponse = new HttpResponse({ status: 201, statusText: 'Created', body: newGuest });
       //It delivers a HttpEvent on the response stream for this request
       req.event(expectedResponse);
+    });
+  });
+
+  describe('#putStatus', () => {
+    let newGuest: Guest;
+    beforeEach(() => {
+      newGuest = { guestId: 1, guestType: "Single", guestFirstName: "Tango", guestLastName: "Tew"};
+    });
+
+    it('#put should return an Observable<Status>', () => {
+      service.putGuest(newGuest).subscribe(guest =>
+        expect(guest.guestType).toEqual('Single'),
+        fail
+        );
+      const req = httpTestingController.expectOne(service.config.guest.uri);
+      expect(req.request.method).toEqual('PUT');
+      req.flush(newGuest);
+    });
+  });
+
+  describe('#deleteStatus', () => {
+    let newGuest: Guest;
+    beforeEach(() => {
+      newGuest = { guestId: 1, guestType: "Single", guestFirstName: "Tango", guestLastName: "Tew"};
+    });
+
+    it('#delete should return an Observable<Status>', () => {
+      service.deleteGuest(1).subscribe(guest =>
+        expect(guest.guestType).toEqual('Single'),
+        fail
+      );
+      const url = `${service.config.guest.uri}/${newGuest.guestId}`;
+      const req = httpTestingController.expectOne(url);
+      expect(req.request.method).toEqual('DELETE');
+      req.flush(newGuest);
     });
   });
 });
