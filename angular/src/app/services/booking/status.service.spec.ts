@@ -1,50 +1,56 @@
-// import { TestBed, getTestBed } from '@angular/core/testing';
-// import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-// import { Config } from './config.booking';
-// import { StatusService } from './status.service';
+import { TestBed} from '@angular/core/testing';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { Config } from './config.booking';
+import { StatusService } from './status.service';
+import { Status } from 'src/app/data/booking/status.model';
 
-// describe('StatusService', () => {
-//   let service: StatusService;
-//   let httpMock: HttpTestingController;
-//   let injector: TestBed;
-//   let config: Config;
+describe('StatusService', () => {
+  let service: StatusService;
+  let httpTestingController: HttpTestingController;
+  let config: Config;
 
-//   beforeEach(() => {
-//     TestBed.configureTestingModule({
-//       imports: [HttpClientTestingModule],
-//       providers: [StatusService]
-//     });
-//     injector = getTestBed();
-//     service = injector.get(StatusService);
-//     httpMock = injector.get(HttpTestingController);
-//     config = injector.get(Config);
-//   });
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
+      providers: [StatusService, Config]
+    });
 
-//   describe('#getStatus', () => {
-//     it('should return an Observable<Status[]>', () => {
-//       const dummyStatus = [
-//         {
-//           statusId: 1,
-//           statusName: 'Confirmed'
-//         },
-//         {
-//           statusId: 2,
-//           statusName: 'Cancelled'
-//         },
-//         {
-//           statusId: 3,
-//           statusName: 'Pending'
-//         }
-//       ];
+    service = TestBed.inject(StatusService);
+    httpTestingController = TestBed.inject(HttpTestingController);
+    config = TestBed.inject(Config);
 
-//       service.get().subscribe(status => {
-//         expect(status.length).toBe(3);
-//         expect(status).toEqual(dummyStatus);
-//       });
+  });
 
-//       const req = httpMock.expectOne(`${config.status}`)
-//       expect(req.request.method).toBe("GET");
-//       req.flush(dummyStatus);
-//       });
-//   })
-// });
+   afterEach(() => {
+    // After every test, assert that there are no more pending requests.
+    httpTestingController.verify();
+  });
+
+  describe('#getStatuss', () => {
+    let dummyStatuss : Status[];
+    beforeEach(() => {
+       dummyStatuss = [
+        {
+          statusId: 1, statusName: "Pending"
+        },
+        {
+          statusId: 2,
+          statusName: "complete"
+        }
+      ] as Status[];
+    });
+
+    it('should return an Observable<Status[]>', () => {
+      service.getStatus().subscribe(
+                          statuses => expect(statuses).toEqual(dummyStatuss),
+                          fail
+      );
+
+      const req = httpTestingController.expectOne(service._config.status.uri)
+      expect(req.request.method).toEqual('GET');
+
+      req.flush(dummyStatuss);
+
+      });
+  });
+});
