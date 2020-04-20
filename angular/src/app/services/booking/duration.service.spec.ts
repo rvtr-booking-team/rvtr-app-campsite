@@ -1,68 +1,76 @@
-// import { TestBed, getTestBed } from '@angular/core/testing';
-// import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-// import { Config } from './config.booking';
-// import { DurationService } from './duration.service';
+import { TestBed, getTestBed } from '@angular/core/testing';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { Config } from './config.booking';
+import { DurationService } from './duration.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Duration } from 'src/app/data/booking/duration.model';
 
-// describe('DurationService', () => {
-//   let service: DurationService;
-//   let httpMock: HttpTestingController;
-//   let injector: TestBed;
-//   let config: Config;
+describe('DurationService', () => {
+  let service: DurationService;
+  let httpMock: HttpTestingController;
+  let config: Config;
 
-//   beforeEach(() => {
-//     TestBed.configureTestingModule({
-//       imports: [HttpClientTestingModule],
-//       providers: [DurationService]
-//     });
-//     injector = getTestBed();
-//     service = injector.get(DurationService);
-//     httpMock = injector.get(HttpTestingController);
-//     config = injector.get(Config);
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
+      providers: [DurationService, Config]
+    });
+    service = TestBed.inject(DurationService);
+    httpMock = TestBed.inject(HttpTestingController);
+    config = TestBed.inject(Config);
 
-//   });
+  });
 
-//   describe('#getDurations', () => {
-//     it('should return an Observable<Duration[]>', () => {
-//       let dummyDurations = [
-//         {
-//           durationId: 1,
-//           checkIn: new Date(2019, 1, 4),
-//           checkOut: new Date(2019, 1, 5),
-//           creationDate: new Date(2019, 1, 2),
-//           modifiedDate: new Date(2019, 1, 3)
-//         },
-//         {
-//           durationId: 2,
-//           checkIn: new Date(2020, 2, 4),
-//           checkOut: new Date(2020, 2, 5),
-//           creationDate: new Date(2020, 2, 2),
-//           modifiedDate: new Date(2020, 2, 3)
-//         }
-//       ];
+   afterEach(() => {
+    // After every test, assert that there are no more pending requests.
+    httpMock.verify();
+  });
 
-//       service.get().subscribe(durations => {
-//         expect(durations.length).toBe(2);
-//         expect(durations).toEqual(dummyDurations);
-//       });
+  describe('#getDurations', () => {
+    let dummyDurations : Duration[];
+    beforeEach(() => {
+       dummyDurations = [
+        {
+          durationId: 1,
+          checkIn: new Date(2019, 1, 4),
+          checkOut: new Date(2019, 1, 5),
+          creationDate: new Date(2019, 1, 2),
+          modifiedDate: new Date(2019, 1, 3)
+        },
+        {
+          durationId: 2,
+          checkIn: new Date(2020, 2, 4),
+          checkOut: new Date(2020, 2, 5),
+          creationDate: new Date(2020, 2, 2),
+          modifiedDate: new Date(2020, 2, 3)
+        }
+      ] as Duration[];
+    });
 
-//       let req = httpMock.expectOne(`${config.duration}`);
-//       expect(req.request.method).toBe("GET");
-//       req.flush(dummyDurations);
-//       });
+    it('should return an Observable<Duration[]>', () => {
+      service.getDurations().subscribe(durations =>
+        expect(durations).toEqual(dummyDurations),
+        fail
+      );
 
-//           //404 error testing
-//     it('can test for 404 error', () => {
-//       const emsg = '404 Error Test';
+      const req = httpMock.expectOne('api/duration')//config.duration.uri);
+      expect(req.request.method).toEqual('GET');
+      req.flush(dummyDurations);
+      });
 
-//       service.get().subscribe( data =>
-//         fail('should have failed with 404 error'),
-//         (error: HttpErrorResponse) => {
-//           expect(error.status).toEqual(404, 'status');
-//           expect(error.error).toEqual(emsg, 'message');
+          //404 error testing
+    // it('can test for 404 error', () => {
+    //   const emsg = '404 Error Test';
 
-//       });
-//       let req = httpMock.expectOne(`${config.duration}`);
-//       req.flush(emsg, {status: 404, statusText: 'Not Found'});
-//     });
-//   });
-// });
+    //   service.get().subscribe( data =>
+    //     fail('should have failed with 404 error'),
+    //     (error: HttpErrorResponse) => {
+    //       expect(error.status).toEqual(404, 'status');
+    //       expect(error.error).toEqual(emsg, 'message');
+
+    //   });
+    //   let req = httpMock.expectOne(`${config.duration.uri}`);
+    //   req.flush(emsg, {status: 404, statusText: 'Not Found'});
+    // });
+  });
+});
