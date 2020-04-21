@@ -49,7 +49,12 @@ export class ReservationService {
     );
   }
 
-  saveReservation(reservation: Reservation): Observable<Reservation> {
+  /**
+   * Represents the _Reservation Service_ `post` method
+   *
+   * @param reservation Reservation
+   */
+  post(reservation: Reservation): Observable<Reservation> {
     return this.http.post<Reservation>(this.config.reservation.uri, reservation, this.httpOptions)
                       .pipe(
                         tap(newGuest => console.log(`saved Reservation: ${JSON.stringify(newGuest)}\n`)),
