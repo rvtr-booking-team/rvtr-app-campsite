@@ -5,7 +5,7 @@ import { GuestService } from './guest.service';
 import { Config } from './config.booking';
 import { Guest } from 'src/app/data/booking/guest.model';
 
-describe('GuestService', () => {
+fdescribe('GuestService', () => {
   let service: GuestService;
   let config: Config;
   let httpClient: HttpClient;
@@ -33,7 +33,7 @@ describe('GuestService', () => {
     });
 
     it('shoud add a guest and return it', () => {
-      service.getGuests().subscribe(
+      service.get().subscribe(
         guests => expect(guests).toEqual(ExpectedGuests, 'should expect list of guests')
       );
 
@@ -45,7 +45,7 @@ describe('GuestService', () => {
 
 
     it('should convert 404 into empty hero', () => {
-      service.getGuests().subscribe(
+      service.get().subscribe(
         data => expect(data.length).toEqual(0, 'should convert 404 error to 0 heroes'),
         fail
       );
@@ -63,8 +63,8 @@ describe('GuestService', () => {
       newGuest = { guestId: 1, guestType: 'Single', guestFirstName: 'Tango', guestLastName: 'Tew'};
     });
 
-    it('Expects to return successful if guest eposted correctly', () => {
-      service.saveGuest(newGuest).subscribe(
+    it('Expects to return successful if guest posted correctly', () => {
+      service.post(newGuest).subscribe(
         data => expect(data).toEqual(newGuest, 'should return a guest if saved successfully')
       );
 
@@ -83,7 +83,7 @@ describe('GuestService', () => {
     });
 
     it('#put should return an Observable<Guest>', () => {
-      service.putGuest(newGuest).subscribe(guest => {
+      service.put(newGuest).subscribe(guest => {
         expect(guest).toEqual(newGuest,
           fail
         );
@@ -101,7 +101,7 @@ describe('GuestService', () => {
     });
 
     it('#delete should return an Observable<Guest>', () => {
-      service.deleteGuest(1).subscribe(guest =>
+      service.delete(1).subscribe(guest =>
         expect(guest).toEqual(newGuest, fail)
       );
       const url = `${service.config.guest.uri}/${newGuest.guestId}`;

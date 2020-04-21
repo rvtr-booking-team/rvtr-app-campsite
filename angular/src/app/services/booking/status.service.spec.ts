@@ -49,7 +49,7 @@ describe('StatusService', () => {
     });
 
     it('should return an Observable<Status[]>', () => {
-      service.getStatus().subscribe(
+      service.get().subscribe(
                             statuses => expect(statuses).toEqual(dummyStatus),
                             fail
                           );
@@ -62,7 +62,7 @@ describe('StatusService', () => {
 
       // Test 3 httpcontoller should returns the 404 error into empty heroes
     it('should convert 404 into empty status', () => {
-      service.getStatus().subscribe(
+      service.get().subscribe(
         data => expect(data.length).toEqual(0, 'should convert 404 error to 0 status'),
         fail
       );
@@ -83,7 +83,7 @@ describe('StatusService', () => {
     // Testing httpPost response
     it('Expects to return successful if status posted correctly', () => {
 
-      service.saveStatus(newStatus).subscribe(
+      service.post(newStatus).subscribe(
         data => expect(data).toEqual(newStatus, 'should return a status if saved successfully')
       );
 
@@ -106,7 +106,7 @@ describe('StatusService', () => {
     });
 
     it('#put should return an Observable<Status>', () => {
-      service.putStatus(newStatus).subscribe(status =>
+      service.put(newStatus).subscribe(status =>
         expect(status.statusName).toEqual('Pending'),
         fail
         );
@@ -123,7 +123,7 @@ describe('StatusService', () => {
       newStatus =  { statusId: 1, statusName: 'Pending'} as Status;
     });
     it('#delete should return an Observable<Status>', () => {
-      service.deleteStatus(1).subscribe(status =>
+      service.delete(1).subscribe(status =>
         expect(status.statusName).toEqual('Pending'),
         fail
       );
