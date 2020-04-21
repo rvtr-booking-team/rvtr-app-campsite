@@ -29,9 +29,12 @@ export class BookingService {
     *
     * @param id number
     */
-    getByAccountId(id: number): Observable<Reservation[]>{
+    getByAccountId(id: number): Reservation[]{
+      let reservations: Reservation[];
       const url = `${this.config.reservation.uri}/?id=${id}`;
-      return this.reservationService.getById(url);
+      let ObsReservation = this.reservationService.getByAccountId(url);
+      ObsReservation.subscribe(reservation => reservations = reservation)
+      return reservations;
     }
 
    /**
@@ -49,7 +52,6 @@ export class BookingService {
         }
       });
      });
-
      return result;
    }
 

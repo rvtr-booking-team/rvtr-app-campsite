@@ -33,11 +33,11 @@ export class ReservationService {
   }
 
   /**
-   * Represents the _Reservation Service_ `getById` method
+   * Represents the _Reservation Service_ `getByAccountId` method
    *
    * @param url string
    */
-  getById(url: string): Observable<Reservation[]> {
+  getByAccountId(url: string): Observable<Reservation[]> {
   return this.http.get<Reservation[]>(url, this.httpOptions)
     .pipe(
       map(reserve => reserve), // returns a {0|1} element array
