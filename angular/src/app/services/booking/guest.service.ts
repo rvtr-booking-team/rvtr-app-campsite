@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Guest } from '../../data/booking/guest.model';
 import { Observable, of } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators'
+import { catchError, tap } from 'rxjs/operators';
 import { Config } from './config.booking';
 
 @Injectable({
@@ -11,15 +11,15 @@ import { Config } from './config.booking';
 export class GuestService {
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json'})
-  }
+  };
 
   constructor(private http: HttpClient, public config: Config) {}
 
   getGuests(): Observable<Guest[]> {
     return this.http.get<Guest[]>(this.config.guest.uri)
                      .pipe(
-                        tap(_ => console.log("Getting all guests")),
-                        catchError(this.handleError<Guest[]>("Error in get Guest", []))
+                        tap(_ => console.log('Getting all guests')),
+                        catchError(this.handleError<Guest[]>('Error in get Guest', []))
                       );
   }
 
@@ -27,7 +27,7 @@ export class GuestService {
     return this.http.post<Guest>(this.config.guest.uri, guest, this.httpOptions)
                      .pipe(
                             tap(newGuest => console.log(`saved guest was: ${JSON.stringify(newGuest)}\n`)),
-                            catchError(this.handleError<Guest>("post error in guest"))
+                            catchError(this.handleError<Guest>('post error'))
                       );
   }
 
@@ -48,9 +48,9 @@ export class GuestService {
                       );
   }
 
- private handleError<T> (operation = 'operation', result?: T) {
+ private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-      return of(result as T)
-    }
+      return of(result as T);
+    };
   }
 }
