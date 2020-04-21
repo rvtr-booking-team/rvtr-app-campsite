@@ -47,7 +47,7 @@ describe('DurationService', () => {
     });
 
     it('should return an Observable<Duration[]>', () => {
-      service.getDurations().subscribe(durations =>
+      service.get().subscribe(durations =>
         expect(durations).toEqual(dummyDurations),
         fail
       );
@@ -58,7 +58,7 @@ describe('DurationService', () => {
     });
 
     it('should convert 404 into empty duration', () => {
-      service.getDurations().subscribe(durations =>
+      service.get().subscribe(durations =>
         expect(durations.length).toEqual(0, 'should convert 404 error to 0 duration'),
         fail
       );
@@ -83,7 +83,7 @@ describe('DurationService', () => {
     });
 
     it('should return and Observable<Duration>', () => {
-      service.saveDuration(dummyDuration).subscribe(durations =>
+      service.post(dummyDuration).subscribe(durations =>
         expect(durations.checkOut).toEqual(testDate),
         fail
       );
@@ -108,7 +108,7 @@ describe('DurationService', () => {
     });
 
     it('#put should return an Observable<Duration>', () => {
-      service.putDuration(dummyDuration).subscribe(durations =>
+      service.put(dummyDuration).subscribe(durations =>
         expect(durations.checkOut).toEqual(testDate),
         fail
       );
@@ -133,7 +133,7 @@ describe('DurationService', () => {
     });
 
     it('#delete should return an Observable<Duration>', () => {
-      service.deleteDuration(1).subscribe(durations =>
+      service.delete(1).subscribe(durations =>
         expect(durations.checkOut).toEqual(testDate),
         fail
       );
