@@ -27,15 +27,15 @@ export class GuestService {
     return this.http.post<Guest>(this.config.guest.uri, guest, this.httpOptions)
                      .pipe(
                             tap(newGuest => console.log(`saved guest was: ${JSON.stringify(newGuest)}\n`)),
-                            catchError(this.handleError<Guest>("post error"))
+                            catchError(this.handleError<Guest>("post error in guest"))
                       );
   }
 
   putGuest(guest: Guest): Observable<Guest> {
-    return this.http.put<Guest>(this.config.guest.uri, guest)
+    return this.http.put<Guest>(this.config.guest.uri, guest, this.httpOptions)
                       .pipe(
-                        tap(newGuest => console.log(`saved Status: ${JSON.stringify(newGuest)}\n`)),
-                        catchError(this.handleError<Guest>('Put error'))
+                        tap(newGuest => console.log(`updated the Guest: ${JSON.stringify(newGuest)}\n`)),
+                        catchError(this.handleError<Guest>('Put error in guest'))
                       );
   }
 
@@ -43,8 +43,8 @@ export class GuestService {
     const url = `${this.config.guest.uri}/${guestId}`;
     return this.http.delete<Guest>(url)
                 .pipe(
-                  tap(newGuest => console.log(`saved Status: ${JSON.stringify(newGuest)}\n`)),
-                  catchError(this.handleError<Guest>('Put error'))
+                  tap(_ => console.log('Deleting guest')),
+                  catchError(this.handleError<Guest>('Delete error in guest'))
                       );
   }
 

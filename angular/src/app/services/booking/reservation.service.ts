@@ -27,7 +27,7 @@ export class ReservationService {
     return this.http.post<Reservation>(this.config.reservation.uri, reservation, this.httpOptions)
                       .pipe(
                         tap(newGuest => console.log(`saved Reservation: ${JSON.stringify(newGuest)}\n`)),
-                        catchError(this.handleError<Reservation>('post error'))
+                        catchError(this.handleError<Reservation>('post error in reservation'))
                       );
   }
 
@@ -35,7 +35,7 @@ export class ReservationService {
     return this.http.put<Reservation>(this.config.reservation.uri, reservation, this.httpOptions)
                       .pipe(
                         tap(newReservation => console.log(`updated the reservation: ${JSON.stringify(newReservation)}\n`)),
-                        catchError(this.handleError<Reservation>('Put error'))
+                        catchError(this.handleError<Reservation>('Put error in reservation'))
                       );
   }
 

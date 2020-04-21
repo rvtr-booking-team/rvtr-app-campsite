@@ -17,21 +17,21 @@ export class DurationService {
     return this.http.get<Duration[]>(this.config.duration.uri)
                       .pipe(
                         tap(_ => console.log('Getting duration')),
-                        catchError(this.handleError<Duration[]>('Error in get Guest', [])));
+                        catchError(this.handleError<Duration[]>('Error in get Duration', [])));
   }
 
   saveDuration(duration: Duration): Observable<Duration> {
     return this.http.post<Duration>(this.config.duration.uri, duration, this.httpOptions)
                       .pipe(
                         tap(newDuration => console.log(`Posted duration: ${JSON.stringify(newDuration)}\n`)),
-                        catchError(this.handleError<Duration>('Error in post Guest')));
+                        catchError(this.handleError<Duration>('Error in post Duration')));
   }
 
   putDuration(duration: Duration): Observable<Duration> {
     return this.http.put<Duration>(this.config.duration.uri, duration)
                       .pipe(
                         tap(_ => console.log('Putting duration')),
-                        catchError(this.handleError<Duration>('Error in put Guest')));
+                        catchError(this.handleError<Duration>('Error in put Duration')));
   }
 
   deleteDuration(durationId: number): Observable<Duration> {

@@ -84,33 +84,43 @@ describe('GuestService', () => {
     });
   });
 
-  describe('#putStatus', () => {
+  describe('#putGuest', () => {
     let newGuest: Guest;
     beforeEach(() => {
-      newGuest = { guestId: 1, guestType: "Single", guestFirstName: "Tango", guestLastName: "Tew"};
+      newGuest = { 
+        guestId: 1, 
+        guestType: "Single", 
+        guestFirstName: "Tango", 
+        guestLastName: "Tew" 
+      } as Guest;
     });
 
-    it('#put should return an Observable<Status>', () => {
-      service.putGuest(newGuest).subscribe(guest =>
-        expect(guest.guestType).toEqual('Single'),
-        fail
+    it('#put should return an Observable<Guest>', () => {
+      service.putGuest(newGuest).subscribe(guest => {
+        expect(guest).toEqual(newGuest,
+          fail
         );
-      const req = httpTestingController.expectOne(service.config.guest.uri);
-      expect(req.request.method).toEqual('PUT');
-      req.flush(newGuest);
+        const req = httpTestingController.expectOne(service.config.duration.uri);
+        expect(req.request.method).toEqual('PUT');
+        req.flush(newGuest);
+      });
     });
   });
 
-  describe('#deleteStatus', () => {
+  describe('#deleteGuest', () => {
     let newGuest: Guest;
     beforeEach(() => {
-      newGuest = { guestId: 1, guestType: "Single", guestFirstName: "Tango", guestLastName: "Tew"};
+      newGuest = { 
+        guestId: 1, 
+        guestType: "Single", 
+        guestFirstName: "Tango", 
+        guestLastName: "Tew"
+      } as Guest;
     });
 
-    it('#delete should return an Observable<Status>', () => {
+    it('#delete should return an Observable<Guest>', () => {
       service.deleteGuest(1).subscribe(guest =>
-        expect(guest.guestType).toEqual('Single'),
-        fail
+        expect(guest).toEqual(newGuest, fail)
       );
       const url = `${service.config.guest.uri}/${newGuest.guestId}`;
       const req = httpTestingController.expectOne(url);
