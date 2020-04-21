@@ -3,7 +3,7 @@ import { Reservation } from '../../data/booking/reservation.model';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { Config } from './config.booking';
-import { tap, catchError } from 'rxjs/operators';
+import { tap, catchError, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -33,11 +33,23 @@ export class ReservationService {
   }
 
   /**
-   * Represents the _Reservation Service_ `post` method
+   * Represents the _Reservation Service_ `getById` method
    *
-   * @param reservation Reservation
+   * @param url string
    */
-  post(reservation: Reservation): Observable<Reservation> {
+  getById(url: string): Observable<Reservation[]> {
+  return this.http.get<Reservation[]>(url, this.httpOptions)
+    .pipe(
+      map(reserve => reserve), // returns a {0|1} element array
+      tap(r => {
+        const outcome = r ? `fetched` : `did not find`;
+        console.log(`${outcome} reservation has been retrieved`);
+      }),
+      catchError(this.handleError<Reservation[]>(`getReservation`, []))
+    );
+  }
+
+  saveReservation(reservation: Reservation): Observable<Reservation> {
     return this.http.post<Reservation>(this.config.reservation.uri, reservation, this.httpOptions)
                       .pipe(
                         tap(newGuest => console.log(`saved Reservation: ${JSON.stringify(newGuest)}\n`)),

@@ -3,6 +3,12 @@ import { ReservationService } from './reservation.service';
 import { GuestService } from './guest.service';
 import { StatusService } from './status.service';
 import { DurationService } from './duration.service';
+import { HttpClient } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
+import { Reservation } from 'src/app/data/booking/reservation.model';
+import { map, tap, catchError } from 'rxjs/operators';
+import { Guest } from 'src/app/data/booking/guest.model';
+import { Config } from './config.booking';
 
 @Injectable({
   providedIn: 'root'
@@ -10,25 +16,23 @@ import { DurationService } from './duration.service';
 export class BookingService {
 
   constructor(
-    reservationService: ReservationService,
-    guestService: GuestService,
-    statusService: StatusService,
-    durationService: DurationService
-    ) { }
+    private readonly http: HttpClient,
+    private readonly reservationService: ReservationService,
+    private readonly guestService: GuestService,
+    private readonly statusService: StatusService,
+    private readonly durationService: DurationService,
+    public config: Config
+  ) { }
 
    /**
     * Represents the _Booking Service_ `getByAccountId` method
     *
     * @param id number
     */
-    getById(id: number){}
-
-   /**
-    * Represents the _Booking Service_ `getByStatusName` method
-    *
-    * @param status string
-    */
-    getByStatus(status: string){}
+    getById(id: number): Observable<Reservation[]>{
+      const url = `${this.config.reservation.uri}/?id=${id}`;
+      return this.reservationService.getById(url);
+    }
 
    /**
     * Represents the _Booking Service_ `getByRangeOfDuration` method
@@ -38,10 +42,15 @@ export class BookingService {
     */
     getByDuration(startDuration: Date, endDuration: Date){}
 
-   /**
-    * Represents the _Booking Service_ `getByRentalId` method
-    *
-    * @param id number
-    */
-    getByRentalId(id: number){}
+  /**
+   * Represents the _Duration Service_ `error handling` method
+   *
+   * @param operation string
+   * @param result T
+   */
+  private handleError<T>(operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+      return of(result as T);
+    };
+  }
 }
