@@ -16,11 +16,32 @@ export class BookingService {
     durationService: DurationService
     ) { }
 
+   /**
+    * Represents the _Booking Service_ `getByAccountId` method
+    *
+    * @param id number
+    */
     getById(id: number){}
 
+   /**
+    * Represents the _Booking Service_ `getByStatusName` method
+    *
+    * @param status string
+    */
     getByStatus(status: string){}
 
+   /**
+    * Represents the _Booking Service_ `getByRangeOfDuration` method
+    *
+    * @param startDuration Date
+    * @param endDuration Date
+    */
     getByDuration(startDuration: Date, endDuration: Date){}
 
-    getAllBooking(){}
+   /**
+    * Represents the _Booking Service_ `getByRentalId` method
+    *
+    * @param id number
+    */
+    getByRentalId(id: number){}
 }
