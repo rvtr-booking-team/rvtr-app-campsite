@@ -49,7 +49,7 @@ describe('ReservationService', () => {
     });
 
     it('should return an Observable<Reservation[]>', () => {
-      service.getReseravtions().subscribe(
+      service.get().subscribe(
         reservations => expect(reservations).toEqual(dummyReservations, 'should expect list of reservations'),
         fail
       );
@@ -62,7 +62,7 @@ describe('ReservationService', () => {
 
     // Test 3  httpcontoller should returns the 404 error into empty heroes
     it('should convert 404 into empty hero', () => {
-      service.getReseravtions().subscribe(
+      service.get().subscribe(
         data => expect(data.length).toEqual(0, 'should convert 404 error to 0 heroes'),
         fail
       );
@@ -103,7 +103,7 @@ describe('ReservationService', () => {
     });
 
     it('Expects to return successful if reservation posted correctly', () => {
-      service.saveReservation(newReservation).subscribe(
+      service.post(newReservation).subscribe(
         data => expect(data).toEqual(newReservation, 'should return a reservation if saved successfully')
       );
       const req = httpTestingController.expectOne(service.config.reservation.uri);
@@ -145,7 +145,7 @@ describe('ReservationService', () => {
         };
     });
     it('#put should return an Observable<Reservation>', () => {
-      service.putReservation(newReservation).subscribe(reservation =>
+      service.put(newReservation).subscribe(reservation =>
         expect(reservation.notes).toEqual('accommodations ...'),
         fail
         );

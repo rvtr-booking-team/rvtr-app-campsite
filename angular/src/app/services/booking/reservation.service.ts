@@ -14,16 +14,30 @@ export class ReservationService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json'})
   };
 
+  /**
+   * Represents the _Reservation Service_ `constructor` method
+   *
+   * @param http HttpCLient
+   * @param config Config
+   */
   constructor(private http: HttpClient, public config: Config) {}
 
-  getReseravtions(): Observable<Reservation[]> {
+  /**
+   * Represents the _Reservation Service_ `get` method
+   */
+  get(): Observable<Reservation[]> {
     return this.http.get<Reservation[]>(this.config.reservation.uri)
                     .pipe(
                       tap(_ => console.log('Getting Reservations')),
                       catchError(this.handleError<Reservation[]>('Error in get reservation', [])));
   }
 
-  saveReservation(reservation: Reservation): Observable<Reservation> {
+  /**
+   * Represents the _Reservation Service_ `post` method
+   *
+   * @param reservation Reservation
+   */
+  post(reservation: Reservation): Observable<Reservation> {
     return this.http.post<Reservation>(this.config.reservation.uri, reservation, this.httpOptions)
                       .pipe(
                         tap(newGuest => console.log(`saved Reservation: ${JSON.stringify(newGuest)}\n`)),
@@ -31,7 +45,12 @@ export class ReservationService {
                       );
   }
 
-  putReservation(reservation: Reservation): Observable<Reservation> {
+  /**
+   * Represents the _Reservation Service_ `put` method
+   *
+   * @param reservation Reservation
+   */
+  put(reservation: Reservation): Observable<Reservation> {
     return this.http.put<Reservation>(this.config.reservation.uri, reservation, this.httpOptions)
                       .pipe(
                         tap(newReservation => console.log(`updated the reservation: ${JSON.stringify(newReservation)}\n`)),
@@ -39,6 +58,11 @@ export class ReservationService {
                       );
   }
 
+  /**
+   * Represents the _Reservation Service_ `delete` method
+   *
+   * @param reservationId number
+   */
   delete(reservationId: number): Observable<Reservation> {
     const url = `${this.config.reservation.uri}/${reservationId}`;
     return this.http.delete<Reservation>(url)
@@ -48,6 +72,12 @@ export class ReservationService {
                 );
   }
 
+  /**
+   * Represents the error handler for the requests
+   *
+   * @param operation operation
+   * @param result T
+   */
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       return of(result as T);
