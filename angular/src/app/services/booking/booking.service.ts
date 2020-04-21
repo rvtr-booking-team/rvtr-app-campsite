@@ -29,10 +29,29 @@ export class BookingService {
     *
     * @param id number
     */
-    getById(id: number): Observable<Reservation[]>{
+    getByAccountId(id: number): Observable<Reservation[]>{
       const url = `${this.config.reservation.uri}/?id=${id}`;
       return this.reservationService.getById(url);
     }
+
+   /**
+    * Represents the _Booking Service_ `getByStartDate` method
+    *
+    * @param startDate Date
+    */
+   getByStartDate(startDate: Date): Reservation[]{
+     let obsReservations = this.reservationService.get();
+     let result: Reservation[];
+     obsReservations.forEach( reservations => {
+      reservations.forEach(reservation => {
+        if(reservation.duration.checkIn === startDate){
+          result.push(reservation);
+        }
+      });
+     });
+
+     return result;
+   }
 
    /**
     * Represents the _Booking Service_ `getByRangeOfDuration` method
