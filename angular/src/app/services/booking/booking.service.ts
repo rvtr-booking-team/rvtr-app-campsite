@@ -16,11 +16,7 @@ import { Config } from './config.booking';
 export class BookingService {
 
   constructor(
-    private readonly http: HttpClient,
     private readonly reservationService: ReservationService,
-    private readonly guestService: GuestService,
-    private readonly statusService: StatusService,
-    private readonly durationService: DurationService,
     public config: Config
   ) { }
 

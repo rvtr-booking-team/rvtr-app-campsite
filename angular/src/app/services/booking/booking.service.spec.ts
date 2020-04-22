@@ -3,17 +3,13 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { ReservationService } from './reservation.service';
 import { HttpResponse } from '@angular/common/http';
 import { BookingService } from './booking.service';
-import { Guest } from 'src/app/data/booking/guest.model';
 import { Reservation } from 'src/app/data/booking/reservation.model';
-import { GuestService } from './guest.service';
-import { DurationService } from './duration.service';
-import { StatusService } from './status.service';
 import { Config } from './config.booking';
 
-fdescribe('BookingService', () => {
+describe('BookingService', () => {
   let service: BookingService;
-  let config: Config;
   let httpTestingController: HttpTestingController;
+  let config: Config;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -28,25 +24,21 @@ fdescribe('BookingService', () => {
   });
 
   describe('#getById', () => {
-    let dummyGuest: GuestService[];
-    let dummyDuration: DurationService[];
-    let dummyStatus: StatusService[];
-    let dummyReservation: ReservationService[];
+    let dummyReservation: Reservation[];
+    let expectedReservation: Reservation[];
 
     beforeEach(() => {
       dummyReservation = [];
     });
-    // it('should be created', () => {
-    //    const id = 1;
-    //    service.getById(id).subscribe(
-    //     data => expect(data.length).toEqual(dummyReservation, 'should convert 404 error to 0 heroes'),
-    //     fail
-    //   );
+    it('should be created', () => {
+       const id = 1;
+       expectedReservation = service.getByAccountId(id);
+       expect(expectedReservation).toEqual(undefined, 'should convert 404 error to 0 heroes');
 
-    //   const req = httpTestingController.expectOne(`${this.config.reservation.uri}/?id=${id}`);
-    //   expect(req.request.method).toEqual('GET');
-    //   req.flush(dummyReservation);
-    // });
+       const req = httpTestingController.expectOne(`${config.reservation.uri}/?id=${id}`);
+       expect(req.request.method).toEqual('GET');
+       req.flush(dummyReservation);
+    });
   });
 });
 

@@ -40,10 +40,10 @@ export class ReservationService {
   getByAccountId(url: string): Observable<Reservation[]> {
   return this.http.get<Reservation[]>(url, this.httpOptions)
     .pipe(
-      map(reserve => reserve), // returns a {0|1} element array
+      map(reservations => reservations), // returns a {0|1} element array
       tap(r => {
         const outcome = r ? `fetched` : `did not find`;
-        console.log(`${outcome} reservation has been retrieved`);
+        console.log(`${outcome} reservation`);
       }),
       catchError(this.handleError<Reservation[]>(`getReservation`, []))
     );
