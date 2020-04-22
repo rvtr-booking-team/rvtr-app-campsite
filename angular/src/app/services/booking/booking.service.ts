@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ReservationService } from './reservation.service';
 import { Observable, of } from 'rxjs';
-import { Reservation } from 'src/app/data/booking/reservation.model';
+import { Reservation } from '../../data/booking/reservation.model';
 import { Config } from './config.booking';
 
 @Injectable({
@@ -72,7 +72,7 @@ export class BookingService {
    */
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-      return of(result as T);
+      return of(result);
     };
   }
 }

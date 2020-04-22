@@ -18,7 +18,7 @@ export class DurationService {
    * @param config ConfigService
    * @param http HttpClient
    */
-  constructor(private http: HttpClient, public config: Config) { }
+  constructor(private readonly http: HttpClient, public config: Config) { }
 
   /**
    * Represents the _Duration Service_ `get` method
@@ -73,7 +73,7 @@ export class DurationService {
    */
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-      return of(result as T);
+      return of(result);
     };
   }
 }

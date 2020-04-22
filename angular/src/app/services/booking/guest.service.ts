@@ -19,7 +19,7 @@ export class GuestService {
    * @param config ConfigService
    * @param http HttpClient
    */
-  constructor(private http: HttpClient, public config: Config) {}
+  constructor(private readonly http: HttpClient, public config: Config) {}
 
   /**
    * Represents the _Guest Service_ `get` method
@@ -79,7 +79,7 @@ export class GuestService {
    */
  private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-      return of(result as T);
+      return of(result);
     };
   }
 }

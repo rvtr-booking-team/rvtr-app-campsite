@@ -20,7 +20,7 @@ export class ReservationService {
    * @param http HttpCLient
    * @param config Config
    */
-  constructor(private http: HttpClient, public config: Config) {}
+  constructor(private readonly http: HttpClient, public config: Config) {}
 
   /**
    * Represents the _Reservation Service_ `get` method
@@ -97,7 +97,7 @@ export class ReservationService {
    */
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-      return of(result as T);
+      return of(result);
     };
   }
 }
