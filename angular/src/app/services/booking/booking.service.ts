@@ -1,13 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ReservationService } from './reservation.service';
-import { GuestService } from './guest.service';
-import { StatusService } from './status.service';
-import { DurationService } from './duration.service';
-import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { Reservation } from 'src/app/data/booking/reservation.model';
-import { map, tap, catchError } from 'rxjs/operators';
-import { Guest } from 'src/app/data/booking/guest.model';
 import { Config } from './config.booking';
 
 @Injectable({

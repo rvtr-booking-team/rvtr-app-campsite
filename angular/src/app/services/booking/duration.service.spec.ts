@@ -3,7 +3,6 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { Config } from './config.booking';
 import { DurationService } from './duration.service';
 import { Duration } from 'src/app/data/booking/duration.model';
-import { HttpResponse } from '@angular/common/http';
 
 describe('DurationService', () => {
   let service: DurationService;
