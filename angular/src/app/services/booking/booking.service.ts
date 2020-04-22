@@ -32,28 +32,39 @@ export class BookingService {
     getByAccountId(id: number): Reservation[]{
       let reservations: Reservation[];
       const url = `${this.config.reservation.uri}/?id=${id}`;
-      let ObsReservation = this.reservationService.getByAccountId(url);
-      ObsReservation.subscribe(reservation => reservations = reservation)
+      const ObsReservation = this.reservationService.getByAccountId(url);
+      ObsReservation.subscribe(reservation => reservations = reservation);
       return reservations;
     }
 
    /**
-    * Represents the _Booking Service_ `getByStartDate` method
+    * Represents the _Booking Service_ `getReservationsByDate` method.
     *
     * @param startDate Date
+    * @param endDate Date
     */
-   getByStartDate(startDate: Date): Reservation[]{
-     let obsReservations = this.reservationService.get();
-     let result: Reservation[];
-     obsReservations.forEach( reservations => {
-      reservations.forEach(reservation => {
-        if(reservation.duration.checkIn === startDate){
-          result.push(reservation);
-        }
-      });
-     });
-     return result;
-   }
+    getReservationsByDate(startDate: Date, endDate: Date): Reservation[]{
+      const obsReservations = this.reservationService.get();
+      const iterativeDay = new Date(startDate);
+      const result = new Set<Reservation>();
+
+      // NOTE: Does not factor in daylight savings time!
+      const daysTotal = (Math.abs(endDate.getTime() - startDate.getTime()) / (60 * 60 * 24 * 1000));
+
+      for (let i = 0; i < daysTotal; i++) {
+        obsReservations.forEach(reservations => {
+          reservations.forEach(reservation => {
+            if (reservation.duration.checkIn.getTime() < iterativeDay.getTime()
+            && reservation.duration.checkOut.getTime() > iterativeDay.getTime()) {
+              result.add(reservation);
+            }
+          });
+        });
+        iterativeDay.setDate(iterativeDay.getDate() + 1);
+      }
+      return Array.from(result);
+    }
+
 
    /**
     * Represents the _Booking Service_ `getByRangeOfDuration` method
