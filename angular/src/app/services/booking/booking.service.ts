@@ -34,12 +34,12 @@ export class BookingService {
     }
 
    /**
-    * Represents the _Booking Service_ `getReservationsByDate` method.
+    * Represents the _Booking Service_ `getByDates` method.
     *
     * @param startDate Date
     * @param endDate Date
     */
-    getReservationsByDate(startDate: Date, endDate: Date): Reservation[]{
+    getByDates(startDate: Date, endDate: Date): Reservation[]{
       const obsReservations = this.reservationService.get();
       const iterativeDay = new Date(startDate);
       const result = new Set<Reservation>();

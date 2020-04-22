@@ -1,7 +1,5 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { ReservationService } from './reservation.service';
-import { HttpResponse } from '@angular/common/http';
 import { BookingService } from './booking.service';
 import { Reservation } from 'src/app/data/booking/reservation.model';
 import { Config } from './config.booking';
@@ -23,21 +21,37 @@ describe('BookingService', () => {
     httpTestingController = TestBed.inject(HttpTestingController);
   });
 
-  describe('#getById', () => {
+  describe('#getByAccountId', () => {
     let dummyReservation: Reservation[];
     let expectedReservation: Reservation[];
 
     beforeEach(() => {
       dummyReservation = [];
     });
-    it('should be created', () => {
+    it('should returns undefine from getByAccountId', () => {
        const id = 1;
        expectedReservation = service.getByAccountId(id);
-       expect(expectedReservation).toEqual(undefined, 'should convert 404 error to 0 heroes');
+       expect(expectedReservation).toEqual(undefined, 'should return undefined');
 
        const req = httpTestingController.expectOne(`${config.reservation.uri}/?id=${id}`);
        expect(req.request.method).toEqual('GET');
        req.flush(dummyReservation);
+    });
+  });
+
+  describe('#getByDates', () => {
+    let dummyReservation: Reservation[];
+    let expectedReservation: Reservation[];
+
+    beforeEach(() => {
+      dummyReservation = [];
+    });
+    it('should returns empty array', () => {
+       const startDate = new Date();
+       const endDate = new Date();
+       expectedReservation = service.getByDates(startDate, endDate);
+       expect(expectedReservation).toEqual(dummyReservation, 'should return empty array');
+
     });
   });
 });
