@@ -24,7 +24,7 @@ export class BookingService {
   /**
    * Represents the _Booking Service_ `delete` method
    *
-   * @param id string
+   * @param id string*
    */
   delete(id: string): Observable<boolean> {
     return this.apiUrl$.pipe(

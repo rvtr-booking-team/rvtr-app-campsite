@@ -2,7 +2,7 @@
   <header>
     <h1>Welcome to Booking</h1>
   </header><br><br>
-  <main >
+  <main>
     <div>
       <div id="search-component">
         <h4><label for="search-box">Choose your City</label></h4>
@@ -15,13 +15,26 @@
             <span>{{city}}</span>
           </li>
         </ul>
+        <h4><label for="search-box">Choose your State</label></h4>
+        <input #searchBox id="search-box" (input)="search(searchBox.value)" />
+        <ul class="search-result">
+          <li *ngFor="let state of states">
+            <span>{{state}}</span>
+          </li>
+        </ul>
       </div>
 
-      <form action="">
-        <label>Checkin Date:<input type="date"></label>&nbsp;&nbsp;&nbsp;
-        <label>CheckOut Date:<input type="date"/></label>
-        <label>Number of Guests:<input type = "number" min ="1" max ="10"/></label>
+      <form #searchForm = "ngForm" (ngSubmit)="submit(searchForm.value)">
+        <label>CheckIn Date:<input type="date" name="CheckIn" ngModel></label>
+        <br/>
+        <label>CheckOut Date:<input type="date" name="CheckOut" ngModel></label>
+        <br/>
+        <label>Number of Guests:<input type = "number" min ="1" name="Guests" ngModel/></label>
+        <input type = "submit" value ="submit">
       </form>
+      <div *ngIf = "Guests > 0">
+        <app-booking-filter [CheckIn]="CheckIn" [CheckOut]="CheckOut" [Guests]="Guests"></app-booking-filter>
+      </div>
     </div>
   </main>
 </section>

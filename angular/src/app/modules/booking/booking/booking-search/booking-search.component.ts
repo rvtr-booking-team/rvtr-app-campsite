@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
+import { FormsModule} from '@angular/forms';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 
 @Component({
@@ -9,11 +10,16 @@ import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 })
 export class BookingSearchComponent implements OnInit {
 
+  CheckIn : Date;
+  CheckOut : Date;
+  Guests : Number;
+
   @Input() cityName: string;
-  // cities: string[];
+  @Input() stateName: string;
   cities :string[] = ["Dallas", "Arlington", "Fortworth"];
+  states :string[] = ["Texas"];
   private searchTerms = new Subject<String>();
-  //cities$: Observable<String[]>;
+  cities$: Observable<String[]>;
 
   constructor() { }
 
@@ -29,7 +35,11 @@ export class BookingSearchComponent implements OnInit {
 
     // switchMap((term: string) => this.heroService.searchHeroes(term)),
   }
-
+  submit(formData){
+    this.CheckIn = formData.CheckIn;
+    this.CheckOut = formData.CheckOut;
+    this.Guests = formData.Guests;
+  }
   search(term: string): void {
     this.searchTerms.next(term);
   }

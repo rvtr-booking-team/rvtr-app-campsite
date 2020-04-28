@@ -1,1 +1,15 @@
-<p>booking-filter works!</p>
+<p>booking filter works!</p>
+<li>{{ CheckIn }}</li>
+<li>{{ CheckOut }}</li>
+<li>{{ Guests }}</li>
+
+<form #searchForm = "ngForm" (ngSubmit)="submit()">
+  <ul class="search-result">
+    <li *ngFor = "let filteredRental in filteredLodgings">
+      <span>{{ filteredRental }}</span>
+      <input type = string name="Rental" value={{filteredRental.id}} ngModel/>
+      <input id = {{filteredRental.id}} type = "submit" value ="submit">
+    </li>
+  </ul>
+</form>
+  

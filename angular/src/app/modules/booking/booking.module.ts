@@ -5,13 +5,14 @@ import { BookingRoutingModule } from './booking-routing.module';
 import { BookingSearchComponent } from './booking/booking-search/booking-search.component';
 import { BookingFilterComponent } from './booking/booking-filter/booking-filter.component';
 import { Stay } from '../../data/stay.model';
-import { NgForm } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [BookingSearchComponent],
+  declarations: [BookingSearchComponent, BookingFilterComponent],
   imports: [
     CommonModule,
-    BookingRoutingModule
+    BookingRoutingModule,
+    FormsModule
   ],
 
 })

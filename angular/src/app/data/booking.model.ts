@@ -20,7 +20,7 @@ export interface Booking {
   accountId: string;
   lodgingId: string;
   guests: Profile[];
-  rentals: Rental[];
+  rental: Rental;
   stay: Stay;
   status: string;
 }
