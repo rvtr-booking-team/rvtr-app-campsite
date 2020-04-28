@@ -1,12 +1,29 @@
-<section class="hero is-bold is-dark is-fullheight-with-navbar">
+<section class="container">
   <header>
     <h1>Welcome to Booking</h1>
-  </header>
-  <main>
+  </header><br><br>
+  <main >
+    <div>
+      <div id="search-component">
+        <h4><label for="search-box">Choose your City</label></h4>
+        <input #searchBox id="search-box" (input)="search(searchBox.value)" />
+        <ul class="search-result">
+          <li *ngFor="let city of cities" >
+            <!-- <a routerLink="/filter/{{city}}">
+              {{city}}
+            </a> -->
+            <span>{{city}}</span>
+          </li>
+        </ul>
+      </div>
 
+      <form action="">
+        <label>Checkin Date:<input type="date"></label>&nbsp;&nbsp;&nbsp;
+        <label>CheckOut Date:<input type="date"/></label>
+        <label>Number of Guests:<input type = "number" min ="1" max ="10"/></label>
+      </form>
+    </div>
   </main>
 </section>
 
-<!--
-    <mat-form-fi
--->
+
