@@ -1,0 +1,22 @@
+<p>reservation-page works!</p>
+
+<li>{{ CheckIn }}</li>
+<li>{{ CheckOut }}</li>
+<li>{{ Guests }}</li>
+<!--Guest model add to guest list, and then on submit adds it to our guest list
+Whenever new guest, add guest to guest list
+
+ngif - is guest list at capacity, and if at capacity, show forum, else hide the form-->
+
+<form #reservationForm="ngForm" (ngSubmit)="submit(reservationForm.value)">
+  <li *ngIf = "counter != Guests">
+    <label>First Name:<input type="text" name="FirstName" ngModel></label>
+    <br/>
+    <label>Last Name:<input type="text" name="LastName" ngModel></label>
+    <br/>
+    <label>Email:<input type = "text" name="Email" ngModel/></label>
+    <br>
+    <label>Phone:<input type = "text" name="Phone" ngModel/></label>
+  </li>
+  <input type="submit" value="submit">
+</form>

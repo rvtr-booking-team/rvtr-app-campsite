@@ -6,9 +6,10 @@ import { BookingSearchComponent } from './booking/booking-search/booking-search.
 import { BookingFilterComponent } from './booking/booking-filter/booking-filter.component';
 import { Stay } from '../../data/stay.model';
 import { FormsModule } from '@angular/forms';
+import { ReservationPageComponent } from './booking/reservation-page/reservation-page.component';
 
 @NgModule({
-  declarations: [BookingSearchComponent, BookingFilterComponent],
+  declarations: [BookingSearchComponent, BookingFilterComponent, ReservationPageComponent],
   imports: [
     CommonModule,
     BookingRoutingModule,

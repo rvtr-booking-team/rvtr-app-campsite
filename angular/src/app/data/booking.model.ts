@@ -15,7 +15,7 @@ import { Stay } from './stay.model';
  * status: string;
  * ```
  */
-export interface Booking {
+export class Booking {
   id: string;
   accountId: string;
   lodgingId: string;
