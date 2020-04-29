@@ -7,7 +7,7 @@
   <li>{{ City }}</li>
 
   <form #filterForm = "ngForm" (ngSubmit)="submit(filterForm.value)">
-    <ul class="search-result">
+    <ul class="search-result" *ngIf="">
       <li *ngFor = "let filteredRental in filteredLodgings">
         <span>{{ filteredRental }}</span>
         <input type = string name="Rental" value={{filteredRental}} ngModel/>

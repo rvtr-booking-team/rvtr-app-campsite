@@ -13,9 +13,6 @@ import { timer } from 'rxjs';
   styleUrls: ['./booking-filter.component.scss']
 })
 export class BookingFilterComponent implements OnInit {
-
-  constructor(private rooms: LodgingService, private bookings: BookingService, private router: Router) { }
-
   test: boolean = false;
   @Input() State: string;
   @Input() City: string;
@@ -27,6 +24,8 @@ export class BookingFilterComponent implements OnInit {
   filteredRentals: Map<string, Rental>;
   filteredLodgings: Rental[] = this.filterLodgings();
   chosenRental: Rental;
+
+  constructor(private rooms: LodgingService, private bookings: BookingService, private router: Router) { }
 
   ngOnInit(): void {
     console.log("Filtered Lodging",this.filteredLodgings)
@@ -42,23 +41,21 @@ export class BookingFilterComponent implements OnInit {
 
   filterLodgings(): Rental[] {
     this.rooms.get().subscribe(data => {
+      this.lodgings = data;
       this.filteredRentals = new Map<string, Rental>()
-      data.forEach(lodging => {
+      this.lodgings.forEach(lodging => {
         for(var key in lodging.rentals){
           if(lodging.rentals.hasOwnProperty(key)){
-            if(lodging.rentals["rentalUnit"].occupancy >= this.Guests) {
-              this.filteredRentals.set(lodging.rentals["id"], lodging.rentals[key]);
-            }
+            lodging.rentals.forEach(rental => {
+              if(rental.rentalUnit.occupancy >= this.Guests) {
+                this.filteredRentals.set(rental.id, rental);
+              }
+            });
           }
         }
-        });
-
-      this.checkForDates(new Date(this.CheckIn), new Date(this.CheckOut)).forEach(element => {
-        if(this.filteredRentals.has(element.rental.id)) {
-           this.filteredRentals.delete(element.rental.id);
-        }
-      })
-
+      //get
+      });
+      console.log(this.filteredRentals)
       Array.from(this.filteredRentals.keys()).forEach(element => {
         this.filteredRentalList.push(this.filteredRentals.get(element));
       })
