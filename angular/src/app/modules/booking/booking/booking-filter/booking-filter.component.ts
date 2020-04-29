@@ -13,7 +13,7 @@ import { timer } from 'rxjs';
   styleUrls: ['./booking-filter.component.scss']
 })
 export class BookingFilterComponent implements OnInit {
-  
+
   constructor(private rooms: LodgingService, bookings: BookingService, private router: Router) { }
   test: boolean = false;
   @Input() State: string;
@@ -22,20 +22,17 @@ export class BookingFilterComponent implements OnInit {
   @Input() CheckOut: Date;
   @Input() Guests: number;
   lodgings: Lodging[] = [];
-  //@Input() bookings: Booking[];
+  filteredRentalList = [];
+  filteredRentals: Map<string, Rental>;
   filteredLodgings: Rental[] = this.filterLodgings();
   chosenRental: Rental;
 
   ngOnInit(): void {
-    this.get();
+    console.log("Filtered Lodging",this.filteredLodgings)
   }
 
-  get(): void {
-    this.rooms.get().subscribe(lodgings => this.lodgings = lodgings);
-  }
-  
   submit(formData) {
-    this.chosenRental = formData.filteredRental; 
+    this.chosenRental = formData.filteredRental;
   }
 
   setTrue() {
@@ -43,29 +40,33 @@ export class BookingFilterComponent implements OnInit {
   }
 
   filterLodgings(): Rental[] {
-    this.rooms.get().subscribe(data => 
-      this.lodgings = data);
-    console.log("Blank one?", this.lodgings);
-    let filteredRentals: Map<string, Rental>;
-    filteredRentals = new Map<string, Rental>()
-      this.lodgings.forEach(lodging => {
-        lodging.rentals.forEach(lod => {
-          if(lod.rentalUnit.occupancy > this.Guests) {
-            filteredRentals.set(lod.rentalUnit.id, lod);
+    this.rooms.get().subscribe(data => {
+      this.filteredRentals = new Map<string, Rental>()
+      data.forEach(lodging => {
+
+        console.log(lodging.rentals)
+        for(var key in lodging.rentals){
+          if(lodging.rentals.hasOwnProperty(key)){
+            if(lodging.rentals["rentalUnit"].occupancy >= this.Guests) {
+              this.filteredRentals.set(lodging.rentals["id"], lodging.rentals[key]);
+              console.log("filterRental", this.filteredRentals);
+            }
           }
-        });
+        }
+        });//get
+
+      // compare filteredRentals and checkForDates response
+      this.checkForDates(this.CheckIn, this.CheckOut).forEach(element => {
+        if(this.filteredRentals.has(element.rental.id)) {
+           this.filteredRentals.delete(element.rental.id);
+        }
+      })
+
+      Array.from(this.filteredRentals.keys()).forEach(element => {
+        this.filteredRentalList.push(this.filteredRentals.get(element));
+      })
       });
-    // compare filteredRentals and checkForDates response
-    this.checkForDates(this.CheckIn, this.CheckOut).forEach(element => {
-      if(filteredRentals.has(element.rental.id)) {
-        filteredRentals.delete(element.rental.id);
-      }
-    });
-    let filteredRentalList = [];
-    Array.from(filteredRentals.keys()).forEach(element => {
-      filteredRentalList.push(filteredRentals.get(element));
-    });
-    return filteredRentalList;
+    return this.filteredRentalList;
   }
 
   private checkForDates(startDate: Date, endDate: Date): Booking[]{
