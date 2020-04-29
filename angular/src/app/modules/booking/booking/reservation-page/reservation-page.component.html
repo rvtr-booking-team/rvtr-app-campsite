@@ -1,11 +1,5 @@
-<p>Make a Reservation</p>
-<!--Guest model add to guest list, and then on submit adds it to our guest list
-Whenever new guest, add guest to guest list
-
-ngif - is guest list at capacity, and if at capacity, show forum, else hide the form-->
-
-<form ngNativeValidate #reservationForm="ngForm">
-  <li *ngIf = "counter < Guests">
+<form ngNativeValidate #reservationForm="ngForm" *ngIf = "counter < Guests">
+  <li>
     <label>First Name:<input type="text" minlength="2" name="FirstName" ngModel required></label>
     <br/>
     <label>Last Name:<input type="text" minlength="2" name="LastName" ngModel required></label>
@@ -16,4 +10,14 @@ ngif - is guest list at capacity, and if at capacity, show forum, else hide the 
   </li>
   <button type="submit" value="Add Guest" (click)="submit(reservationForm.value); reservationForm.reset()">Add Guest</button>
 </form>
-<button (click)="reserve()">Reserve!</button>
+
+
+
+<div *ngIf = "counter >= Guests && !reserved">
+  <h1>Make a Reservation</h1>
+  <button (click)="reserve()">Reserve!</button>
+</div>
+
+<div *ngIf = "reserved">
+  <strong><span>Thank you for reserving at {{ chosenRental.name }} with your party of {{Guests}}!</span></strong>
+</div>

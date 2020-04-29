@@ -7,16 +7,19 @@
             <option *ngFor="let state of states" value = "{{state}}">{{state}}</option>
           </select>
         </label>
+
         <label>City
           <select class="dropdown" name="City" ngModel>
             <option *ngFor="let city of cities" value = "{{city}}">{{city}}</option>
           </select>
-        </label>        
+        </label>
+
         <label>CheckIn Date:<input type="date" name="CheckIn" ngModel required></label>
         <br/>
         <label>CheckOut Date:<input type="date" name="CheckOut" ngModel required></label>
         <br/>
         <label>Number of Guests:<input type = "number" min ="1" name="Guests" ngModel required/></label>
+
         <input type = "submit" value ="Submit">
       </form>
       <div *ngIf = "Guests > 0">

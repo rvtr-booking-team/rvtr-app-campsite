@@ -9,7 +9,7 @@
  * dateModified: Date
  * ```
  */
-export interface Stay {
+export class Stay {
   id: string;
   checkIn: Date;
   checkOut: Date;

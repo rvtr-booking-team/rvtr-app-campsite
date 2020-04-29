@@ -25,6 +25,7 @@ export class ReservationPageComponent implements OnInit {
   counter: number = 0;
   FormGuests: Profile[] = new Array(this.Guests);
   newBooking: Booking = new Booking();
+  reserved: Boolean = false;
 
   ngOnInit(): void {}
   submit(formData) {
@@ -43,36 +44,15 @@ export class ReservationPageComponent implements OnInit {
   }
 
   reserve() {
-    this.newBooking.stay.checkIn = this.CheckIn;
-    this.newBooking.stay.checkOut = this.CheckOut;
-    this.newBooking.stay.dateCreated = new Date();
+    // this.newBooking.stay.checkIn = this.CheckIn;
+    // this.newBooking.stay.checkOut = this.CheckOut;
+    // this.newBooking.stay.dateCreated = new Date();
     //this.newBooking.accountId = this.accountId;
     this.newBooking.rental = this.chosenRental;
     //this.newBooking.lodgingId = this.findLodgingIdByRental(this.newBooking.rental);
     //
     //reservation
     //LastName
+    this.reserved = true;
   }
-  //select lodgingid from lodging where rentalid = this.chosenRental
-  //foreach through lodgings, loop through the rentals in the lodgings. If there's a match, break/return
-  // findLodgingIdByRental(rental: Rental): string {
-  //   this.rooms.get().forEach(obs => {
-  //     obs.forEach(lodging => {
-  //       let curLodingId = lodging.id;
-  //       lodging.rentals.forEach(rent => {
-  //         if(rent === rental) {
-  //           return curLodingId;
-  //         }
-  //       })
-  //     })
-  //   })
-  //   return null;
-  // }
 }
-
-
-// export interface Name {
-//   id: string;
-//   family: string;
-//   given: string;
-// }

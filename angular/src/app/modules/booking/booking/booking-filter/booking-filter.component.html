@@ -6,18 +6,28 @@
   <li>{{ State }}</li>
   <li>{{ City }}</li>
 
-  <form #filterForm = "ngForm" (ngSubmit)="submit(filterForm.value)">
+  <br><br>
+
+  <form #filterForm = "ngForm">
     <ul class="search-result" *ngIf="filteredLodgings">
-      <li *ngFor = "let filteredRent of filteredLodgings">
-        <span>{{filteredLodgings}}</span>
-        <span>{{ filteredRent.name }}</span>
-        <input type = string name="Rental" value={{filteredRent}} ngModel/>
-        <input id = {{filteredRent.id}} type = "submit" value ="submit">
-      </li>
+      <table>
+        <tr>
+          <li *ngFor = "let filteredRent of filteredLodgings">
+            <div class = "choose">
+              <span>Rental Name:</span><Label>{{filteredRent.name}}</Label><br>
+
+              <label>Unit: <p>{{filteredRent.rentalUnit.occupancy}}</p></label>
+
+              <label for="">Rooms: <p>{{filteredRent.rentalUnit.bedrooms}}</p> </label>
+              <button  (click)="submit(filteredRent); filterForm.reset()" >Select</button>
+            </div>
+         </li>
+        </tr>
+      </table>
     </ul>
   </form>
-
 </div>
+
 <div *ngIf = "!test">
   <input type="submit" value="Confirm" (click)="setTrue()">
 </div>

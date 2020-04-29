@@ -19,6 +19,7 @@ export class BookingFilterComponent implements OnInit {
   @Input() CheckIn: Date;
   @Input() CheckOut: Date;
   @Input() Guests: number;
+  @Input() filteredRental;
   lodgings: Lodging[] = [];
   filteredRentalList = [];
   filteredRentals: Map<string, Rental>;
@@ -31,8 +32,9 @@ export class BookingFilterComponent implements OnInit {
     console.log("Filtered Lodging",this.filteredLodgings)
   }
 
-  submit(formData) {
-    this.chosenRental = formData.filteredRental;
+  submit(filteredRent: Rental) {
+    this.chosenRental = filteredRent;
+    console.log(filteredRent)
   }
 
   setTrue() {
@@ -53,7 +55,6 @@ export class BookingFilterComponent implements OnInit {
             });
           }
         }
-      //get
       });
       console.log(this.filteredRentals)
       Array.from(this.filteredRentals.keys()).forEach(element => {
