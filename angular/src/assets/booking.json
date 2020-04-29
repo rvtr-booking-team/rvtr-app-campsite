@@ -1,0 +1,26 @@
+[
+  {
+    "id": "1",
+    "accountId": "",
+    "lodgingId": "",
+    "guests": {
+      "id": "",
+      "email": "",
+      "name": {
+        "id": "",
+        "family": "",
+        "given": ""
+      },
+      "phone": ""
+    },
+    "rental": {
+      "id": "",
+      "name": "",
+      "rentalUnit": {
+        "id": "",
+      },
+    },
+    "stay": "",
+    "status": ""
+  }
+]

@@ -1,7 +1,11 @@
 {
   "api": {
     "account": "",
-    "booking": "",
+    "booking": {
+      "booking": "assets/booking.json",
+      "booking.lodging": "assets/booking.lodging.json",      
+      "booking.account": "assets/booking.account.json"
+    },
     "lodging": ""
   },
   "navigation": {
