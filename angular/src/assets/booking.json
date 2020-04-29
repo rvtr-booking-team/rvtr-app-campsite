@@ -3,24 +3,57 @@
     "id": "1",
     "accountId": "",
     "lodgingId": "",
-    "guests": {
-      "id": "",
-      "email": "",
-      "name": {
-        "id": "",
-        "family": "",
-        "given": ""
-      },
-      "phone": ""
-    },
+    "guests": null,
     "rental": {
-      "id": "",
+      "id": "1",
       "name": "",
-      "rentalUnit": {
-        "id": "",
-      },
+      "rentalUnit": null
     },
-    "stay": "",
-    "status": ""
+    "stay": {
+      "id": "",
+      "checkIn": "2020-05-01",
+      "checkOut": "2020-05-04",
+      "dateCreated": "",
+      "dateModified": ""
+    },
+    "status": "pending"
+  },
+  {
+    "id": "2",
+    "accountId": "",
+    "lodgingId": "",
+    "guests": null,
+    "rental": {
+      "id": "2",
+      "name": "",
+      "rentalUnit": null
+    },
+    "stay": {
+      "id": "",
+      "checkIn": "2020-05-03",
+      "checkOut": "2020-05-07",
+      "dateCreated": "",
+      "dateModified": ""
+    },
+    "status": "pending"
+  },
+  {
+    "id": "3",
+    "accountId": "",
+    "lodgingId": "",
+    "guests": null,
+    "rental": {
+      "id": "3",
+      "name": "",
+      "rentalUnit": null
+    },
+    "stay": {
+      "id": "",
+      "checkIn": "2020-05-05",
+      "checkOut": "2020-05-09",
+      "dateCreated": "",
+      "dateModified": ""
+    },
+    "status": "pending"
   }
 ]

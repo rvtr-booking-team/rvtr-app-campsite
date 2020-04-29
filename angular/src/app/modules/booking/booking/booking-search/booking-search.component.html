@@ -1,23 +1,6 @@
 <section class="container">
   <main>
     <div>
-      <!-- <div id="search-component">
-        <h1>Welcome to Booking</h1>
-        <h4><label for="search-box">Choose your City</label></h4>
-        <input #searchBox id="search-box" (input)="search(searchBox.value)" />
-        <ul class="search-result">
-          <select>
-            <option *ngFor="let city of cities" value = "{{city}}">{{city}}</option>
-          </select>          
-        </ul>
-        <h4><label for="search-box">Choose your State</label></h4>
-        <input #searchBox id="search-box" (input)="search(searchBox.value)" />
-        <ul class="search-result">
-          <li *ngFor="let state of states">
-            <span>{{state}}</span>
-          </li>
-        </ul>
-      </div> -->
       <form ngNativeValidate #searchForm = "ngForm" (ngSubmit)="submit(searchForm.value)">
         <label>State
           <select class="dropdown" name="State" ngModel>

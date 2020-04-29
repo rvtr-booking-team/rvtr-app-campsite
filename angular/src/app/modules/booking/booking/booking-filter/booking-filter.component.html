@@ -6,7 +6,7 @@
   <li>{{ State }}</li>
   <li>{{ City }}</li>
 
-  <!-- <form #filterForm = "ngForm" (ngSubmit)="submit(filterForm.value)">
+  <form #filterForm = "ngForm" (ngSubmit)="submit(filterForm.value)">
     <ul class="search-result">
       <li *ngFor = "let filteredRental in filteredLodgings">
         <span>{{ filteredRental }}</span>
@@ -14,12 +14,8 @@
         <input id = {{filteredRental.id}} type = "submit" value ="submit">
       </li>
     </ul>
-  </form> -->
+  </form>
 
-
-  <!-- <input type="submit" value="Submit" (click)="navigateWithState()">
-  <input type="submit" value="Submit" (click)="goToReservationComponent()">
-  <a [routerLink]="['reservationpage']" [state]="{CheckIn: CheckIn}" -->
 </div>
 <div *ngIf = "!test">
   <input type="submit" value="Confirm" (click)="setTrue()">

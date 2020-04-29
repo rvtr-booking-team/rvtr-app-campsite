@@ -18,7 +18,7 @@ export class AccountService {
    * @param http HttpClient
    */
   constructor(private readonly config: ConfigService, private readonly http: HttpClient) {
-    this.apiUrl$ = config.get().pipe(map((cfg) => cfg.api.account));
+    this.apiUrl$ = config.get().pipe(map((cfg) => cfg.api.booking.baccount));
   }
 
   /**

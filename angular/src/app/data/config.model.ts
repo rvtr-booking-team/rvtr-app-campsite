@@ -11,7 +11,11 @@ import { Link } from './link.model';
 export interface Config {
   api: {
     account: string;
-    booking: string;
+    booking: {
+      booking: string;
+      blodging: string;
+      baccount: string;
+    }
     lodging: string;
   };
   navigation: {
