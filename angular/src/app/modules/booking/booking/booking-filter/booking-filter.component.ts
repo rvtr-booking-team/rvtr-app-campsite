@@ -21,20 +21,13 @@ export class BookingFilterComponent implements OnInit {
   @Input() CheckOut: Date;
   @Input() Guests: number;
   //filteredLodgings: Rental[] = this.filterLodgings();
-  chosenRentalId: string;
+  chosenRental: Rental;
 
   ngOnInit(): void {
   }
   
   submit(formData) {
-    this.chosenRentalId = formData;
-  }
-
-  navigateWithState() {
-    this.router.navigateByUrl('/reservationpage', { state: { CheckOut: this.CheckOut, CheckIn: this.CheckIn} });
-  }
-  goToReservationComponent(): void {
-    this.router.navigate(['reservationpage'], {state: {CheckIn: this.CheckIn, CheckOut: this.CheckOut, Guests: this.Guests}});
+    this.chosenRental = formData.filteredRental;
   }
 
   setTrue() {
@@ -88,9 +81,4 @@ export class BookingFilterComponent implements OnInit {
   //   }
   //   return Array.from(result);
   // }
-
-  getByCity(city: string, state: string): string[]{
-    return new Array();
-  }
-
 }

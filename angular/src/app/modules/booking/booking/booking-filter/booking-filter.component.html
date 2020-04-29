@@ -3,12 +3,14 @@
   <li>{{ CheckIn }}</li>
   <li>{{ CheckOut }}</li>
   <li>{{ Guests }}</li>
+  <li>{{ State }}</li>
+  <li>{{ City }}</li>
 
   <!-- <form #filterForm = "ngForm" (ngSubmit)="submit(filterForm.value)">
     <ul class="search-result">
       <li *ngFor = "let filteredRental in filteredLodgings">
         <span>{{ filteredRental }}</span>
-        <input type = string name="Rental" value={{filteredRental.id}} ngModel/>
+        <input type = string name="Rental" value={{filteredRental}} ngModel/>
         <input id = {{filteredRental.id}} type = "submit" value ="submit">
       </li>
     </ul>
@@ -19,7 +21,9 @@
   <input type="submit" value="Submit" (click)="goToReservationComponent()">
   <a [routerLink]="['reservationpage']" [state]="{CheckIn: CheckIn}" -->
 </div>
-<input type="submit" value="Submit" (click)="setTrue()">
+<div *ngIf = "!test">
+  <input type="submit" value="Confirm" (click)="setTrue()">
+</div>
 <div *ngIf = "test">
-  <app-reservation-page [CheckIn]="CheckIn" [CheckOut]="CheckOut" [Guests]="Guests"></app-reservation-page>
+  <app-reservation-page [CheckIn]="CheckIn" [CheckOut]="CheckOut" [Guests]="Guests" [chosenRental]="chosenRental"></app-reservation-page>
 </div>

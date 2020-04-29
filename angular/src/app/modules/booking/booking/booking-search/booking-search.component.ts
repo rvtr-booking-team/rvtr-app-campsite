@@ -13,6 +13,8 @@ export class BookingSearchComponent implements OnInit {
   CheckIn : Date;
   CheckOut : Date;
   Guests : Number;
+  State: string;
+  City: string;
 
   @Input() cityName: string;
   @Input() stateName: string;
@@ -24,21 +26,14 @@ export class BookingSearchComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-  // // wait 300ms after each keystroke before considering the term
-  //   debounceTime(300),
-
-    // // ignore new term if same as previous term
-    // distinctUntilChanged(),
-
-    // // switch to new search observable each time the term changes
-    // switchMap((term: string) => this.val)
-
-    // switchMap((term: string) => this.heroService.searchHeroes(term)),
   }
+  
   submit(formData){
     this.CheckIn = formData.CheckIn;
     this.CheckOut = formData.CheckOut;
     this.Guests = formData.Guests;
+    this.State = formData.State;
+    this.City = formData.City;
   }
   search(term: string): void {
     this.searchTerms.next(term);

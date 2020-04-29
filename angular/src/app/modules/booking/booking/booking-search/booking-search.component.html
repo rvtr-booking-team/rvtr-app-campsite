@@ -1,19 +1,14 @@
 <section class="container">
-  <header>
-    <h1>Welcome to Booking</h1>
-  </header><br><br>
   <main>
     <div>
-      <div id="search-component">
+      <!-- <div id="search-component">
+        <h1>Welcome to Booking</h1>
         <h4><label for="search-box">Choose your City</label></h4>
         <input #searchBox id="search-box" (input)="search(searchBox.value)" />
         <ul class="search-result">
-          <li *ngFor="let city of cities" >
-            <!-- <a routerLink="/filter/{{city}}">
-              {{city}}
-            </a> -->
-            <span>{{city}}</span>
-          </li>
+          <select>
+            <option *ngFor="let city of cities" value = "{{city}}">{{city}}</option>
+          </select>          
         </ul>
         <h4><label for="search-box">Choose your State</label></h4>
         <input #searchBox id="search-box" (input)="search(searchBox.value)" />
@@ -22,18 +17,27 @@
             <span>{{state}}</span>
           </li>
         </ul>
-      </div>
-
-      <form #searchForm = "ngForm" (ngSubmit)="submit(searchForm.value)">
-        <label>CheckIn Date:<input type="date" name="CheckIn" ngModel></label>
+      </div> -->
+      <form ngNativeValidate #searchForm = "ngForm" (ngSubmit)="submit(searchForm.value)">
+        <label>State
+          <select class="dropdown" name="State" ngModel>
+            <option *ngFor="let state of states" value = "{{state}}">{{state}}</option>
+          </select>
+        </label>
+        <label>City
+          <select class="dropdown" name="City" ngModel>
+            <option *ngFor="let city of cities" value = "{{city}}">{{city}}</option>
+          </select>
+        </label>        
+        <label>CheckIn Date:<input type="date" name="CheckIn" ngModel required></label>
         <br/>
-        <label>CheckOut Date:<input type="date" name="CheckOut" ngModel></label>
+        <label>CheckOut Date:<input type="date" name="CheckOut" ngModel required></label>
         <br/>
-        <label>Number of Guests:<input type = "number" min ="1" name="Guests" ngModel/></label>
-        <input type = "submit" value ="submit">
+        <label>Number of Guests:<input type = "number" min ="1" name="Guests" ngModel required/></label>
+        <input type = "submit" value ="Submit">
       </form>
       <div *ngIf = "Guests > 0">
-        <app-booking-filter [CheckIn]="CheckIn" [CheckOut]="CheckOut" [Guests]="Guests"></app-booking-filter>
+        <app-booking-filter [CheckIn]="CheckIn" [CheckOut]="CheckOut" [Guests]="Guests" [State]="State" [City]="City"></app-booking-filter>
       </div>
     </div>
   </main>

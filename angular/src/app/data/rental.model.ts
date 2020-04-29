@@ -9,7 +9,7 @@ import { RentalUnit } from './rental-unit.model';
  * rentalUnit: RentalUnit;
  * ```
  */
-export interface Rental {
+export class Rental {
   id: string;
   name: string;
   rentalUnit: RentalUnit;

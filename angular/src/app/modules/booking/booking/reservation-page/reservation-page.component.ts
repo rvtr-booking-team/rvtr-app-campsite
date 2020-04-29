@@ -3,6 +3,8 @@ import { Booking } from 'src/app/data/booking.model';
 import { BookingFilterComponent } from '../booking-filter/booking-filter.component';
 import { Profile } from 'src/app/data/profile.model';
 import { Name } from 'src/app/data/name.model';
+import { Rental } from 'src/app/data/rental.model';
+import { LodgingService } from 'src/app/services/lodging/lodging.service';
 
 @Component({
   selector: 'app-reservation-page',
@@ -11,18 +13,18 @@ import { Name } from 'src/app/data/name.model';
 })
 export class ReservationPageComponent implements OnInit {
 
-  constructor() { }
+  constructor(private rooms: LodgingService) { }
   @Input() CheckIn: Date;
   @Input() CheckOut: Date;
   @Input() Guests: number;
-  //@Input() RentalId: string;
-  LastName: string[];
-  FirstName: string[];
-  Email: string[];
-  Phone: string[];
+  @Input() chosenRental: Rental;
+  LastName: string;
+  FirstName: string;
+  Email: string;
+  Phone: string;
   counter: number = 0;
-  //GuestArray: number[] = new Array(this.Guests);
   FormGuests: Profile[] = new Array(this.Guests);
+  newBooking: Booking = new Booking();
 
   ngOnInit(): void {}
   submit(formData) {
@@ -34,13 +36,40 @@ export class ReservationPageComponent implements OnInit {
     pro.email = formData.Email;
     pro.phone = formData.Phone;
     this.FormGuests.push(pro);
-    let newBooking: Booking = new Booking();
     if(this.counter == this.Guests) {
-      newBooking.guests = this.FormGuests;
+      this.newBooking.guests = this.FormGuests;
     }
     this.counter++;
   }
+
+  reserve() {
+    this.newBooking.stay.checkIn = this.CheckIn;
+    this.newBooking.stay.checkOut = this.CheckOut;
+    this.newBooking.stay.dateCreated = new Date();
+    //this.newBooking.accountId = this.accountId;
+    this.newBooking.rental = this.chosenRental;
+    //this.newBooking.lodgingId = this.findLodgingIdByRental(this.newBooking.rental);
+    //
+    //reservation
+    //LastName
+  }
+  //select lodgingid from lodging where rentalid = this.chosenRental
+  //foreach through lodgings, loop through the rentals in the lodgings. If there's a match, break/return
+  // findLodgingIdByRental(rental: Rental): string {
+  //   this.rooms.get().forEach(obs => {
+  //     obs.forEach(lodging => {
+  //       let curLodingId = lodging.id;
+  //       lodging.rentals.forEach(rent => {
+  //         if(rent === rental) {
+  //           return curLodingId;
+  //         }
+  //       })
+  //     })
+  //   })
+  //   return null;
+  // }
 }
+
 
 // export interface Name {
 //   id: string;
