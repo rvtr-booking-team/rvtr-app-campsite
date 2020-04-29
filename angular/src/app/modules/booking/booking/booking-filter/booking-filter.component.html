@@ -7,11 +7,12 @@
   <li>{{ City }}</li>
 
   <form #filterForm = "ngForm" (ngSubmit)="submit(filterForm.value)">
-    <ul class="search-result" *ngIf="">
-      <li *ngFor = "let filteredRental in filteredLodgings">
-        <span>{{ filteredRental }}</span>
-        <input type = string name="Rental" value={{filteredRental}} ngModel/>
-        <input id = {{filteredRental.id}} type = "submit" value ="submit">
+    <ul class="search-result" *ngIf="filteredLodgings">
+      <li *ngFor = "let filteredRent of filteredLodgings">
+        <span>{{filteredLodgings}}</span>
+        <span>{{ filteredRent.name }}</span>
+        <input type = string name="Rental" value={{filteredRent}} ngModel/>
+        <input id = {{filteredRent.id}} type = "submit" value ="submit">
       </li>
     </ul>
   </form>
