@@ -12,7 +12,7 @@ export class BookingSearchComponent implements OnInit {
 
   CheckIn : Date;
   CheckOut : Date;
-  Guests : Number;
+  Guests : number;
   State: string;
   City: string;
 
@@ -27,7 +27,7 @@ export class BookingSearchComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  
+
   submit(formData){
     this.CheckIn = formData.CheckIn;
     this.CheckOut = formData.CheckOut;

@@ -19,9 +19,10 @@
               <label>Unit: <p>{{filteredRent.rentalUnit.occupancy}}</p></label>
 
               <label for="">Rooms: <p>{{filteredRent.rentalUnit.bedrooms}}</p> </label>
+
               <button  (click)="submit(filteredRent); filterForm.reset()" >Select</button>
             </div>
-         </li>
+          </li>
         </tr>
       </table>
     </ul>
@@ -31,6 +32,7 @@
 <div *ngIf = "!test">
   <input type="submit" value="Confirm" (click)="setTrue()">
 </div>
+
 <div *ngIf = "test">
   <app-reservation-page [CheckIn]="CheckIn" [CheckOut]="CheckOut" [Guests]="Guests" [chosenRental]="chosenRental"></app-reservation-page>
 </div>
